@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="128"
+   height="40"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="dottedEighthRise.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6"
+     inkscape:cx="57.204279"
+     inkscape:cy="8.5075483"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1855"
+     inkscape:window-height="959"
+     inkscape:window-x="65"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1012.3622)">
+    <path
+       sodipodi:type="arc"
+       style="stroke-width:1.005;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path2985"
+       sodipodi:cx="51.359943"
+       sodipodi:cy="19.120556"
+       sodipodi:rx="5.2085991"
+       sodipodi:ry="3.5355339"
+       d="m 56.568542,19.120556 c 0,1.952621 -2.331969,3.535534 -5.208599,3.535534 -2.876629,0 -5.208599,-1.582913 -5.208599,-3.535534 0,-1.952622 2.33197,-3.535534 5.208599,-3.535534 2.87663,0 5.208599,1.582912 5.208599,3.535534 z"
+       transform="matrix(0.9397012,-0.34199659,0.34199659,0.9397012,-3.8470476,1044.1209)" />
+    <rect
+       style="stroke:none"
+       id="rect2987"
+       width="1.1260842"
+       height="22.781229"
+       x="54.790752"
+       y="1021.2692"
+       ry="0.15263741"
+       rx="0.15263741" />
+    <path
+       sodipodi:type="arc"
+       style="stroke-width:1.005;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+       id="path2985-6"
+       sodipodi:cx="51.359943"
+       sodipodi:cy="19.120556"
+       sodipodi:rx="5.2085991"
+       sodipodi:ry="3.5355339"
+       d="m 56.568542,19.120556 c 0,1.952621 -2.331969,3.535534 -5.208599,3.535534 -2.876629,0 -5.208599,-1.582913 -5.208599,-3.535534 0,-1.952622 2.33197,-3.535534 5.208599,-3.535534 2.87663,0 5.208599,1.582912 5.208599,3.535534 z"
+       transform="matrix(0.9465707,-0.32249639,0.32249639,0.9465707,19.491907,1041.7552)" />
+    <rect
+       style="stroke:none"
+       id="rect2987-7"
+       width="1.1260842"
+       height="24.043921"
+       x="78.288254"
+       y="1018.8629"
+       ry="0.15263741"
+       rx="0.15263741" />
+    <rect
+       style="stroke:none"
+       id="rect3778"
+       width="24.274036"
+       height="3.3326175"
+       x="-47.170746"
+       y="1019.4445"
+       transform="matrix(0.9889043,-0.14855396,0.09954115,0.99503345,0,0)"
+       rx="0.14885084"
+       ry="0.15078279" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="path3213"
+       sodipodi:cx="19.821428"
+       sodipodi:cy="24.285715"
+       sodipodi:rx="1.4285715"
+       sodipodi:ry="1.4285715"
+       d="m 21.25,24.285715 a 1.4285715,1.4285715 0 1 1 -2.857143,0 1.4285715,1.4285715 0 1 1 2.857143,0 z"
+       transform="translate(63.928571,1019.505)" />
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       id="rect3215"
+       width="5.704442"
+       height="2.3665981"
+       x="23.364925"
+       y="1031.6151"
+       transform="matrix(0.98777497,-0.15588654,0.03152747,0.99950289,0,0)"
+       rx="0.14755052"
+       ry="0.15037106" />
+  </g>
+</svg>

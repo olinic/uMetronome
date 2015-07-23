@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=uMetronome
+Exec=qmlscene $@ Main.qml
+Icon=uMetronome.svg
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
+

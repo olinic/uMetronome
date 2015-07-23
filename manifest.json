@@ -1,0 +1,15 @@
+{
+    "name": "umetronome.otter",
+    "description": "uMetronome is an easy-to-use metronome for music enthusiasts",
+    "architecture": "all",
+    "title": "uMetronome",
+    "hooks": {
+        "uMetronome": {
+            "apparmor": "uMetronome.apparmor",
+            "desktop": "uMetronome.desktop"
+        }
+    },
+    "version": "1.5",
+    "maintainer": "Oliver Nichols <oliver.nic012@gmail.com>",
+    "framework": "ubuntu-sdk-15.04"
+}
