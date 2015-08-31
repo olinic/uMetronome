@@ -43,11 +43,6 @@ MainView {
     width: units.gu(50) // change to fill screen
     height: units.gu(75)
 
-    //button colors
-    property string positiveColor: "#3fb24f" //green
-    property string primaryColor: "#dd4814" //orange
-    property string negativeColor: "#fc4949" //red
-
     property int tempoPickerHeight: units.gu(20)
 
 
@@ -299,7 +294,7 @@ MainView {
                  Button {
                      id: okButton
                      text: i18n.tr("Ok")
-                     color: positiveColor
+                     color: UbuntuColors.green
                      onClicked: {
                          hide()
                      }
@@ -316,7 +311,7 @@ MainView {
             text: i18n.tr("Your settings have been saved!")
             Button {
                 text: i18n.tr("Ok")
-                color: positiveColor
+                color: UbuntuColors.green
                 onClicked: PopupUtils.close(dialogue)
             }
         }
@@ -377,7 +372,7 @@ MainView {
                     Button {
 
                         text: i18n.tr("Press")
-                        color: primaryColor
+                        color: UbuntuColors.orange
                         property int altValue: 0
                         property double timeOne: 0
                         property double timeTwo: 0
@@ -425,13 +420,13 @@ MainView {
                     Button {
                         id: closeButton
                         text: i18n.tr("Close")
-                        color: primaryColor
+                        color: UbuntuColors.orange
                         onClicked: PopupUtils.close(tempoFinderDialog)
                     }
                     Button {
                         id: acceptTempoButton
                         text: i18n.tr("Use This Tempo")
-                        color: primaryColor
+                        color: UbuntuColors.orange
 
 
                         onClicked: {
@@ -910,7 +905,7 @@ MainView {
                        id: startButton
                        Layouts.item: "startItem"
                        text: i18n.tr("Start")
-                       color: primaryColor
+                       color: UbuntuColors.orange
 
 
 
@@ -929,7 +924,7 @@ MainView {
 
 
                        text: "Eighth"
-                       color: primaryColor
+                       color: UbuntuColors.orange
                        onClicked: PopupUtils.open(beatSelector, beatButton)
                    }
 
@@ -939,7 +934,7 @@ MainView {
                        id: stopButton
                        Layouts.item: "stopItem"
                        text: i18n.tr("Stop")
-                       color: primaryColor
+                       color: UbuntuColors.orange
 
 
 
@@ -956,7 +951,7 @@ MainView {
 
                        Layouts.item: "extraTempoItem"
                        text: i18n.tr("Tempo")
-                       color: primaryColor
+                       color: UbuntuColors.orange
 
                        onClicked: PopupUtils.open(extraTempoSection)
                    }
@@ -1184,7 +1179,7 @@ MainView {
                         Button {
                             id: mainBeatButton
                             iconSource: "icons/noteIcon.svg"
-                            color: primaryColor
+                            color: UbuntuColors.orange
                             width: units.gu(5)
 
                             anchors {
@@ -1325,7 +1320,7 @@ MainView {
                             }
 
                             iconSource: "icons/noteIcon.svg"
-                            color: primaryColor
+                            color: UbuntuColors.orange
                             width: units.gu(5)
                             property string input: ""
                             onClicked: PopupUtils.open(soundSelector, subBeatButton)
@@ -1357,7 +1352,7 @@ MainView {
                         id: saveDefaultButton
                         Layouts.item: "defaultButtonItem"
                         text: i18n.tr("Save Current Settings")
-                        color: primaryColor
+                        color: UbuntuColors.orange
 
                         anchors {
                             horizontalCenter: parent.horizontalCenter
