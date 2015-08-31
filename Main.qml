@@ -6,7 +6,6 @@ import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.Pickers 1.0
 import QtMultimedia 5.0
 import Ubuntu.Layouts 1.0
-import "ui"
 import "components"
 import "components/dbFunctions.js" as DbFunctions
 import "components/effectFunctions.js" as EffectFunctions
