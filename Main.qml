@@ -30,10 +30,6 @@ MainView {
     // Note! applicationName needs to match the "name" field of the click manifest
     applicationName: "umetronome.otter"
 
-    /*
-     This property enables the application to change orientation
-     when the device is rotated. The default is false.
-    */
     useDeprecatedToolbar: false
     automaticOrientation: true
 
@@ -56,8 +52,7 @@ MainView {
         if(index%measureCount == 0) {
 
             if(timer.beat == 0) {
-                metronomeLine.state = ""
-                metronomeLine.state = "rotate"
+                rotateAnimation.start()
                 timer.beat = 1
             }
             else {
@@ -829,46 +824,28 @@ MainView {
                            rotation: 300
                            smooth: true
 
-                           states: [
-                               State {
-                                   name: "rotate"
-                                   PropertyChanges {
-                                       target: metronomeLine
-                                   }
+                           SequentialAnimation {
+                               id: rotateAnimation
+                               RotationAnimation {
+                                   id: rightRotation
+                                   target: metronomeLine
+                                   duration: timer.interval*timer.subdivisions
+                                   direction: RotationAnimation.Shortest
+                                   property: "rotation"
+                                   from: 300
+                                   to: 60
                                }
-                           ]
 
-
-                           transitions: [
-                               Transition {
-                                   to: "rotate"
-                                   SequentialAnimation {
-
-                                       RotationAnimation {
-                                           id: rightRotation
-                                           target: metronomeLine
-                                           duration: timer.interval*timer.subdivisions
-                                           direction: RotationAnimation.Shortest
-                                           property: "rotation"
-                                           from: 300
-                                           to: 60
-                                       }
-
-
-                                       RotationAnimation {
-                                           id: leftRotation
-                                           target: metronomeLine
-                                           duration: timer.interval*timer.subdivisions
-                                           direction: RotationAnimation.Shortest
-                                           property: "rotation"
-                                           from: 60
-                                           to: 300
-                                       }
-
-                                   }
-                              }
-                           ]
-
+                               RotationAnimation {
+                                   id: leftRotation
+                                   target: metronomeLine
+                                   duration: timer.interval*timer.subdivisions
+                                   direction: RotationAnimation.Shortest
+                                   property: "rotation"
+                                   from: 60
+                                   to: 300
+                               }
+                           }
                        }
 
                     }
