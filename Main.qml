@@ -51,13 +51,10 @@ MainView {
     function playSound(index, measureCount, pattern, silentPattern) {
         if(index%measureCount == 0) {
 
-            if(timer.beat == 0) {
+            if(! timer.beat) {
                 rotateAnimation.start()
-                timer.beat = 1
             }
-            else {
-                timer.beat = 0
-            }
+            timer.beat = ~ timer.beat
 
             var effect = EffectFunctions.getMainEffect();
             if (EffectFunctions.effectsAreSame()) {
