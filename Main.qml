@@ -6,7 +6,6 @@ import Ubuntu.Components.Popups 1.0
 import Ubuntu.Components.Pickers 1.0
 import QtMultimedia 5.0
 import Ubuntu.Layouts 1.0
-import "ui"
 import "components"
 import "components/dbFunctions.js" as DbFunctions
 import "components/effectFunctions.js" as EffectFunctions
@@ -31,10 +30,6 @@ MainView {
     // Note! applicationName needs to match the "name" field of the click manifest
     applicationName: "umetronome.otter"
 
-    /*
-     This property enables the application to change orientation
-     when the device is rotated. The default is false.
-    */
     useDeprecatedToolbar: false
     automaticOrientation: true
 
@@ -43,11 +38,6 @@ MainView {
 
     width: units.gu(50) // change to fill screen
     height: units.gu(75)
-
-    //button colors
-    property string positiveColor: "#3fb24f" //green
-    property string primaryColor: "#dd4814" //orange
-    property string negativeColor: "#fc4949" //red
 
     property int tempoPickerHeight: units.gu(20)
 
@@ -61,14 +51,10 @@ MainView {
     function playSound(index, measureCount, pattern, silentPattern) {
         if(index%measureCount == 0) {
 
-            if(timer.beat == 0) {
-                metronomeLine.state = ""
-                metronomeLine.state = "rotate"
-                timer.beat = 1
+            if(! timer.beat) {
+                rotateAnimation.start()
             }
-            else {
-                timer.beat = 0
-            }
+            timer.beat = ~ timer.beat
 
             var effect = EffectFunctions.getMainEffect();
             if (EffectFunctions.effectsAreSame()) {
@@ -86,8 +72,8 @@ MainView {
     function playSubBeat(beat, pattern, silentPattern) {
         var soundPlayed = false;
         var makeSound = true;
-        for (var a=0; a < silentPattern.length; a++) {
-            if (beat == silentPattern[a]) {
+        for (var i=0; i < silentPattern.length; i++) {
+            if (beat == silentPattern[i]) {
                 makeSound = false;
             }
         }
@@ -124,226 +110,6 @@ MainView {
         var bpm = 60000/ms
         return bpm
     }
-
-
-
-
-    ListModel {
-        id: beats
-
-        ListElement {
-            name: "Quarter"
-            number: 1
-            tempoDiv: 1
-            pattern: ""
-            silentPattern: ""
-            img: "quarter.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Eighth"
-            number: 2
-            tempoDiv: 2
-            pattern: ""
-            silentPattern: ""
-            img: "eighth.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Triplet"
-            number: 3
-            tempoDiv: 3
-            pattern: ""
-            silentPattern: ""
-            img: "triplet.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Triplet (Fall)"
-            number: 3
-            tempoDiv: 3
-            pattern: ""
-            silentPattern: "1"
-            img: "fallTriplet.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Triplet (Rise)"
-            number: 3
-            tempoDiv: 3
-            pattern: ""
-            silentPattern: "2"
-            img: "riseTriplet.svg"
-            type: "Typical Beats"
-        }
-
-        ListElement {
-            name: "Sixteenth"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: ""
-            img: "sixteenth.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Sixteenth (And A)"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "1"
-            img: "sixteenthAndA.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Dotted Eighth"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "12"
-            img: "dottedEighth.svg"
-            type: "Typical Beats"
-        }
-
-        ListElement {
-            name: "Dotted Eighth (Rise)"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "23"
-            img: "dottedEighthRise.svg"
-            type: "Uncommon Beats"
-        }
-        ListElement {
-            name: "Sixteenth (E And)"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "3"
-            img: "sixteenthEAnd.svg"
-            type: "Uncommon Beats"
-        }
-        ListElement {
-            name: "Sixteenth (E A)"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "2"
-            img: "sixteenthEA.svg"
-            type: "Uncommon Beats"
-        }
-        ListElement {
-            name: "Sixtuplet"
-            number: 6
-            tempoDiv: 6
-            pattern: ""
-            silentPattern: ""
-            img: "sixtuplet.svg"
-            type: "Uncommon Beats"
-        }
-        ListElement {
-            name: "4/4 Quarter"
-            number: 4
-            tempoDiv: 1
-            pattern: ""
-            silentPattern: ""
-            img: "44quarter.svg"
-            type: "Common Measures"
-        }
-        ListElement {
-            name: "3/4 Quarter"
-            number: 3
-            tempoDiv: 1
-            pattern: ""
-            silentPattern: ""
-            img: "34quarter.svg"
-            type: "Common Measures"
-        }
-        ListElement {
-            name: "2/2 Cut Time"
-            number: 2
-            tempoDiv: 1
-            pattern: ""
-            silentPattern: ""
-            img: "cutTime.svg"
-            type: "Common Measures"
-        }
-        ListElement {
-            name: "5/8 (3-2)"
-            number: 5
-            tempoDiv: 2
-            pattern: "35" // 3-2 --> beat 3 & 5
-            silentPattern: ""
-            img: "32.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "5/8 (2-3)"
-            number: 5   //number of beats in the measure
-            tempoDiv: 2 //number to divide by to calc tempo
-            pattern: "25"
-            silentPattern: ""
-            img: "23.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "7/8 (3-2-2)"
-            number: 7
-            tempoDiv: 2
-            pattern: "357"
-            silentPattern: ""
-            img: "322.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "7/8 (2-3-2)"
-            number: 7
-            tempoDiv: 2
-            pattern: "257"
-            silentPattern: ""
-            img: "232.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "7/8 (2-2-3)"
-            number: 7
-            tempoDiv: 2
-            pattern: "247"
-            silentPattern: ""
-            img: "223.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "8/8 (3-3-2)"
-            number: 8
-            tempoDiv: 2
-            pattern: "368"
-            silentPattern: ""
-            img: "332.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "8/8 (3-2-3)"
-            number: 8
-            tempoDiv: 2
-            pattern: "358"
-            silentPattern: ""
-            img: "323.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "8/8 (2-3-3)"
-            number: 8
-            tempoDiv: 2
-            pattern: "258"
-            silentPattern: ""
-            img: "233.svg"
-            type: "Irregular Beats"
-        }
-    }
-
-
-
 
     ListModel {
         id: soundFiles
@@ -461,7 +227,7 @@ MainView {
                          }
                      }
 
-                     model: beats
+                     model: Beats {}
                      delegate: Standard {
                          text: name
                          onClicked: {
@@ -520,7 +286,7 @@ MainView {
                  Button {
                      id: okButton
                      text: i18n.tr("Ok")
-                     color: positiveColor
+                     color: UbuntuColors.green
                      onClicked: {
                          hide()
                      }
@@ -537,13 +303,11 @@ MainView {
             text: i18n.tr("Your settings have been saved!")
             Button {
                 text: i18n.tr("Ok")
-                color: positiveColor
+                color: UbuntuColors.green
                 onClicked: PopupUtils.close(dialogue)
             }
         }
     }
-
-
 
     Component {
         id: extraTempoSection
@@ -600,7 +364,7 @@ MainView {
                     Button {
 
                         text: i18n.tr("Press")
-                        color: primaryColor
+                        color: UbuntuColors.orange
                         property int altValue: 0
                         property double timeOne: 0
                         property double timeTwo: 0
@@ -648,13 +412,13 @@ MainView {
                     Button {
                         id: closeButton
                         text: i18n.tr("Close")
-                        color: primaryColor
+                        color: UbuntuColors.orange
                         onClicked: PopupUtils.close(tempoFinderDialog)
                     }
                     Button {
                         id: acceptTempoButton
                         text: i18n.tr("Use This Tempo")
-                        color: primaryColor
+                        color: UbuntuColors.orange
 
 
                         onClicked: {
@@ -1057,46 +821,28 @@ MainView {
                            rotation: 300
                            smooth: true
 
-                           states: [
-                               State {
-                                   name: "rotate"
-                                   PropertyChanges {
-                                       target: metronomeLine
-                                   }
+                           SequentialAnimation {
+                               id: rotateAnimation
+                               RotationAnimation {
+                                   id: rightRotation
+                                   target: metronomeLine
+                                   duration: timer.interval*timer.subdivisions
+                                   direction: RotationAnimation.Shortest
+                                   property: "rotation"
+                                   from: 300
+                                   to: 60
                                }
-                           ]
 
-
-                           transitions: [
-                               Transition {
-                                   to: "rotate"
-                                   SequentialAnimation {
-
-                                       RotationAnimation {
-                                           id: rightRotation
-                                           target: metronomeLine
-                                           duration: timer.interval*timer.subdivisions
-                                           direction: RotationAnimation.Shortest
-                                           property: "rotation"
-                                           from: 300
-                                           to: 60
-                                       }
-
-
-                                       RotationAnimation {
-                                           id: leftRotation
-                                           target: metronomeLine
-                                           duration: timer.interval*timer.subdivisions
-                                           direction: RotationAnimation.Shortest
-                                           property: "rotation"
-                                           from: 60
-                                           to: 300
-                                       }
-
-                                   }
-                              }
-                           ]
-
+                               RotationAnimation {
+                                   id: leftRotation
+                                   target: metronomeLine
+                                   duration: timer.interval*timer.subdivisions
+                                   direction: RotationAnimation.Shortest
+                                   property: "rotation"
+                                   from: 60
+                                   to: 300
+                               }
+                           }
                        }
 
                     }
@@ -1133,7 +879,7 @@ MainView {
                        id: startButton
                        Layouts.item: "startItem"
                        text: i18n.tr("Start")
-                       color: primaryColor
+                       color: UbuntuColors.orange
 
 
 
@@ -1152,7 +898,7 @@ MainView {
 
 
                        text: "Eighth"
-                       color: primaryColor
+                       color: UbuntuColors.orange
                        onClicked: PopupUtils.open(beatSelector, beatButton)
                    }
 
@@ -1162,7 +908,7 @@ MainView {
                        id: stopButton
                        Layouts.item: "stopItem"
                        text: i18n.tr("Stop")
-                       color: primaryColor
+                       color: UbuntuColors.orange
 
 
 
@@ -1179,7 +925,7 @@ MainView {
 
                        Layouts.item: "extraTempoItem"
                        text: i18n.tr("Tempo")
-                       color: primaryColor
+                       color: UbuntuColors.orange
 
                        onClicked: PopupUtils.open(extraTempoSection)
                    }
@@ -1407,7 +1153,7 @@ MainView {
                         Button {
                             id: mainBeatButton
                             iconSource: "icons/noteIcon.svg"
-                            color: primaryColor
+                            color: UbuntuColors.orange
                             width: units.gu(5)
 
                             anchors {
@@ -1548,7 +1294,7 @@ MainView {
                             }
 
                             iconSource: "icons/noteIcon.svg"
-                            color: primaryColor
+                            color: UbuntuColors.orange
                             width: units.gu(5)
                             property string input: ""
                             onClicked: PopupUtils.open(soundSelector, subBeatButton)
@@ -1580,7 +1326,7 @@ MainView {
                         id: saveDefaultButton
                         Layouts.item: "defaultButtonItem"
                         text: i18n.tr("Save Current Settings")
-                        color: primaryColor
+                        color: UbuntuColors.orange
 
                         anchors {
                             horizontalCenter: parent.horizontalCenter
