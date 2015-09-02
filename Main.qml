@@ -72,8 +72,8 @@ MainView {
     function playSubBeat(beat, pattern, silentPattern) {
         var soundPlayed = false;
         var makeSound = true;
-        for (var a=0; a < silentPattern.length; a++) {
-            if (beat == silentPattern[a]) {
+        for (var i=0; i < silentPattern.length; i++) {
+            if (beat == silentPattern[i]) {
                 makeSound = false;
             }
         }
