@@ -52,84 +52,102 @@ MainView {
     property int tempoPickerHeight: units.gu(20)
 
 
-    function calcInterval(bpm, subdivisions) {
-        var interval = 60000/bpm
-        interval = interval/subdivisions
+    function calcInterval(bpm, subdivisions) { // calculates the time in ms between each beat and sub-beat
+        var interval = 60000/bpm                // beats per minute
+        interval = interval/subdivisions        // divide to include sub-beats
         return interval
     }
 
-    function playSound(index, measureCount, pattern, silentPattern) {
-        if(index%measureCount == 0) {
+    function playMainSound() {
+        var effect = EffectFunctions.getMainEffect();   // get the main sound effect
+        if (EffectFunctions.effectsAreSame()) {         // if the main sound and sub sound are using the same sound effect, adjust the volume to the main volume
+            var vol = EffectFunctions.getVolume();      // get the main volume
+            effect.volume = vol;                        // set the volume
+        }
+        effect.play();                      // play the sound
+    }
+
+    function playSubSound() {
+        var subEffect = EffectFunctions.getMainSubEffect();
+        if (EffectFunctions.effectsAreSame()) {
+            var vol = EffectFunctions.getSubVolume();
+            subEffect.volume = vol;
+        }
+
+        subEffect.play()
+    }
+
+    function playSound(index, numOfBeats, pattern, silentPattern) {
+        /*
+          index             // counter - tells me which beat I am on inside the measure
+          numOfBeats        // how many beats in the measure
+          pattern           // pattern indicates how to play irregular measures (5/8 time)
+          silentPattern     // indicates which beats are supposed to be silent
+        */
+        if(index%numOfBeats == 0) { // first beat
 
             if(timer.beat == 0) {
-                metronomeLine.state = ""
-                metronomeLine.state = "rotate"
-                timer.beat = 1
+                metronomeLine.state = ""        // cannot remember the purpose of this line
+                metronomeLine.state = "rotate"  // start the rotation
+                timer.beat = 1                  // prevents activating the clockwise rotation when the needle reaches the right side, the rotation will automatically bring it back
             }
             else {
-                timer.beat = 0
+                timer.beat = 0                  // Needle is on the right now, change the value to 0 so that the rotation is activated when it hits the left side.
             }
 
-            var effect = EffectFunctions.getMainEffect();
-            if (EffectFunctions.effectsAreSame()) {
-                var vol = EffectFunctions.getVolume();
-                effect.volume = vol;
-            }
-            effect.play();
+            playMainSound();                     // play the main beat
         }
         else {
-            playSubBeat(index, pattern, silentPattern)
+            playSubBeat(index, pattern, silentPattern)      // play the sub beat
         }
-        timer.num = index%measureCount + 1
+        timer.num = index%numOfBeats + 1        // increment the index for the beat that I am on
     }
 
     function playSubBeat(beat, pattern, silentPattern) {
-        var soundPlayed = false;
-        var makeSound = true;
+        var soundPlayed = false;                // I have not played a sound yet
+        var makeSound = true;                   // I intend to make a sound (so far)
         for (var a=0; a < silentPattern.length; a++) {
-            if (beat == silentPattern[a]) {
-                makeSound = false;
+            if (beat == silentPattern[a]) {     // if my beat is listed in the silent pattern, do not play the beat
+                makeSound = false;              // I intend to not make a sound
             }
         }
 
-        if (makeSound) {
-            if(pattern.length != 0) {
+        if (makeSound) {                        // take action if I plan on making a sound
+            if(pattern.length != 0) {           // if a pattern exists, determine if I need to play a main beat instead of a sub beat
                 for(var i=0; i < pattern.length; i++) {
 
-                    if (beat == pattern[i]) {
-                        var effect = EffectFunctions.getMainEffect();
-                        if (EffectFunctions.effectsAreSame()) {
-                            var vol = EffectFunctions.getVolume();
-                            effect.volume = vol;
-                        }
-                        effect.play();
-                        soundPlayed = true
+                    if (beat == pattern[i]) {   // yes, I need to play a main beat
+                        playMainSound();         // play the main beat
+                        soundPlayed = true      // I played a sound, do not play a sub beat
                     }
                 }
             }
-            if(!soundPlayed) {
-
-                var subEffect = EffectFunctions.getMainSubEffect();
-                if (EffectFunctions.effectsAreSame()) {
-                    var vol = EffectFunctions.getSubVolume();
-                    subEffect.volume = vol;
-                }
-
-                subEffect.play()
+            if(!soundPlayed) {                  // if I haven't made a sound, make one!
+                playSubSound();                 // play sub sound
             }
         }
     }
 
-    function calculateBpm(ms) {
+    function calculateBpm(ms) {                 // calculates the beats per minute based on the interval of ms (useful for the tempoFinder)
         var bpm = 60000/ms
         return bpm
     }
 
 
 
-
+    // list of all the types of beats
     ListModel {
         id: beats
+        /*
+          name      // primary name of beat
+          number    // how many beats are in the measure
+          tempoDiv  // how to divide the time
+          pattern   // pattern for irregular beats
+          silentpattern // pattern for silent beats
+          img       // image name for beat
+          type      // category of the beat
+
+        */
 
         ListElement {
             name: "Quarter"
@@ -344,26 +362,26 @@ MainView {
 
 
 
-
+    // Creates sound effects for all the sounds
     ListModel {
         id: soundFiles
 
         Component.onCompleted: {
-
+            // go into the EffectFunctions inside the Components Folder and setup all the sound effects
             EffectFunctions.setupSoundModel();
             EffectFunctions.setupSoundEffects();
 
-            EffectFunctions.adjustVolume(mainBeatSlider.value)
-            EffectFunctions.adjustSubVolume(subBeatSlider.value)
+            EffectFunctions.adjustVolume(mainBeatSlider.value)          // get the main volume
+            EffectFunctions.adjustSubVolume(subBeatSlider.value)        // get the sub volume
 
 
-            EffectFunctions.getMainEffect().volume = EffectFunctions.getVolume();
-            EffectFunctions.getMainSubEffect().volume = EffectFunctions.getSubVolume();
+            EffectFunctions.getMainEffect().volume = EffectFunctions.getVolume();       // set the volume of the main effect
+            EffectFunctions.getMainSubEffect().volume = EffectFunctions.getSubVolume(); // set the volume of the sub effect
         }
     }
 
 
-
+    // Timer handles all of the timing of beats
     Timer {
         id: timer
         interval: 500
