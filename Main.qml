@@ -51,6 +51,8 @@ MainView {
 
     property int tempoPickerHeight: units.gu(20)
 
+    property variant beatPattern: ["main", "sub"]
+
 
     function calcInterval(bpm, subdivisions) { // calculates the time in ms between each beat and sub-beat
         var interval = 60000/bpm                // beats per minute
@@ -77,56 +79,62 @@ MainView {
         subEffect.play()
     }
 
-    function playSound(index, numOfBeats, pattern, silentPattern) {
-        /*
-          index             // counter - tells me which beat I am on inside the measure
-          numOfBeats        // how many beats in the measure
-          pattern           // pattern indicates how to play irregular measures (5/8 time)
-          silentPattern     // indicates which beats are supposed to be silent
-        */
+    function buildBeatPattern(numOfBeats, pattern, silentPattern) {
+        beatPattern.splice(numOfBeats, 7);                 // reduces the array to the length of number of beats
+
+        beatPattern[0] = "main";                        // The first beat should be a main beat
+
+        // insert sub beats
+        for (var i=1; i < numOfBeats; i++) {            // set the rest of the indices as sub beats, we will insert main beats or silent beats later
+            beatPattern[i] = "sub";                     // set that index as a sub beat
+        }
+
+        // insert main beats based on pattern
+        for (var i=0; i < pattern.length; i++) {
+            var index;
+            index = parseInt(pattern.charAt(i));        // get the index
+            beatPattern[index] = "main"                 // set that index as a main beat
+        }
+
+        // insert silent beats based on pattern
+        for (var i=0; i < silentPattern.length; i++) {
+            var index;
+            index = parseInt(silentPattern.charAt(i));  // get the index
+            beatPattern[index] = "silent"               // set that index as a silent beat
+        }
+
+        /*console.log(pattern);                         // debugging
+        console.log(silentPattern);
+        console.log(beatPattern);*/
+    }
+
+    function playBeat(index, numOfBeats) {
         if(index%numOfBeats == 0) { // first beat
 
             if(timer.beat == 0) {
-                metronomeLine.state = ""        // cannot remember the purpose of this line
+                metronomeLine.state = ""        // cannot remember the purpose of this line, but it makes the state changes work
                 metronomeLine.state = "rotate"  // start the rotation
                 timer.beat = 1                  // prevents activating the clockwise rotation when the needle reaches the right side, the rotation will automatically bring it back
             }
             else {
                 timer.beat = 0                  // Needle is on the right now, change the value to 0 so that the rotation is activated when it hits the left side.
             }
+        }
 
-            playMainSound();                     // play the main beat
+
+        if (beatPattern[index] == "main") {     // play main beat if we are supposed to
+            playMainSound();
         }
-        else {
-            playSubBeat(index, pattern, silentPattern)      // play the sub beat
+        else if (beatPattern[index] == "sub") { // play sub beat if we are supposed to
+            playSubSound();
         }
-        timer.num = index%numOfBeats + 1        // increment the index for the beat that I am on
+        // else do nothing "silent"             // we are done!
+
+
+        timer.num = (index + 1) % numOfBeats        // increment the index for the beat that I am on
     }
 
-    function playSubBeat(beat, pattern, silentPattern) {
-        var soundPlayed = false;                // I have not played a sound yet
-        var makeSound = true;                   // I intend to make a sound (so far)
-        for (var a=0; a < silentPattern.length; a++) {
-            if (beat == silentPattern[a]) {     // if my beat is listed in the silent pattern, do not play the beat
-                makeSound = false;              // I intend to not make a sound
-            }
-        }
 
-        if (makeSound) {                        // take action if I plan on making a sound
-            if(pattern.length != 0) {           // if a pattern exists, determine if I need to play a main beat instead of a sub beat
-                for(var i=0; i < pattern.length; i++) {
-
-                    if (beat == pattern[i]) {   // yes, I need to play a main beat
-                        playMainSound();         // play the main beat
-                        soundPlayed = true      // I played a sound, do not play a sub beat
-                    }
-                }
-            }
-            if(!soundPlayed) {                  // if I haven't made a sound, make one!
-                playSubSound();                 // play sub sound
-            }
-        }
-    }
 
     function calculateBpm(ms) {                 // calculates the beats per minute based on the interval of ms (useful for the tempoFinder)
         var bpm = 60000/ms
@@ -290,7 +298,7 @@ MainView {
             name: "5/8 (3-2)"
             number: 5
             tempoDiv: 2
-            pattern: "35" // 3-2 --> beat 3 & 5
+            pattern: "3"
             silentPattern: ""
             img: "32.svg"
             type: "Irregular Beats"
@@ -299,7 +307,7 @@ MainView {
             name: "5/8 (2-3)"
             number: 5   //number of beats in the measure
             tempoDiv: 2 //number to divide by to calc tempo
-            pattern: "25"
+            pattern: "2"
             silentPattern: ""
             img: "23.svg"
             type: "Irregular Beats"
@@ -308,7 +316,7 @@ MainView {
             name: "7/8 (3-2-2)"
             number: 7
             tempoDiv: 2
-            pattern: "357"
+            pattern: "35" // 3-5 --> beat 3 & 5
             silentPattern: ""
             img: "322.svg"
             type: "Irregular Beats"
@@ -317,7 +325,7 @@ MainView {
             name: "7/8 (2-3-2)"
             number: 7
             tempoDiv: 2
-            pattern: "257"
+            pattern: "25"
             silentPattern: ""
             img: "232.svg"
             type: "Irregular Beats"
@@ -326,7 +334,7 @@ MainView {
             name: "7/8 (2-2-3)"
             number: 7
             tempoDiv: 2
-            pattern: "247"
+            pattern: "24"
             silentPattern: ""
             img: "223.svg"
             type: "Irregular Beats"
@@ -335,7 +343,7 @@ MainView {
             name: "8/8 (3-3-2)"
             number: 8
             tempoDiv: 2
-            pattern: "368"
+            pattern: "36"
             silentPattern: ""
             img: "332.svg"
             type: "Irregular Beats"
@@ -344,7 +352,7 @@ MainView {
             name: "8/8 (3-2-3)"
             number: 8
             tempoDiv: 2
-            pattern: "358"
+            pattern: "35"
             silentPattern: ""
             img: "323.svg"
             type: "Irregular Beats"
@@ -353,7 +361,7 @@ MainView {
             name: "8/8 (2-3-3)"
             number: 8
             tempoDiv: 2
-            pattern: "258"
+            pattern: "25"
             silentPattern: ""
             img: "233.svg"
             type: "Irregular Beats"
@@ -405,14 +413,20 @@ MainView {
 
 
 
-        onTriggered: {playSound(num, subdivisions, mainBeats, silentBeats)}
+
+        onTriggered: {
+            playBeat(num, subdivisions);
+        }
 
         onPatternChanged: {
             mainBeats = str2NumArray(pattern);
+            buildBeatPattern(subdivisions, pattern, silentPattern);
         }
         onSilentPatternChanged: {
             silentBeats = str2NumArray(silentPattern);
+            buildBeatPattern(subdivisions, pattern, silentPattern);
         }
+
 
         function str2NumArray(str) {
             var array = [];
@@ -428,6 +442,7 @@ MainView {
         }
         onSubdivisionsChanged: {
             tempoUpdate();
+            buildBeatPattern(subdivisions, pattern, silentPattern);
         }
         onTempoDivisionsChanged: {
             tempoUpdate();
