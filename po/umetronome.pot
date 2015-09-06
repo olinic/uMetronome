@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-04 05:56-0700\n"
+"POT-Creation-Date: 2015-09-05 18:13-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,16 +21,16 @@ msgstr ""
 msgid "Metronome"
 msgstr ""
 
-#: components/SettingsToolButton.qml:7 Main.qml:1226
+#: components/SettingsToolButton.qml:7 Main.qml:1215
 msgid "Settings"
 msgstr ""
 
 #: components/StartToolButton.qml:6 components/StartToolButton.qml:17
-#: Main.qml:1168
+#: Main.qml:1157
 msgid "Start"
 msgstr ""
 
-#: components/StartToolButton.qml:13 Main.qml:1197
+#: components/StartToolButton.qml:13 Main.qml:1186
 msgid "Stop"
 msgstr ""
 
@@ -66,88 +66,88 @@ msgstr ""
 msgid "Toolbar tapped"
 msgstr ""
 
-#: Main.qml:478
+#: Main.qml:467
 msgid "Choose from beat selection"
 msgstr ""
 
-#: Main.qml:532
+#: Main.qml:521
 msgid "Choose from sound selection"
 msgstr ""
 
-#: Main.qml:555 Main.qml:572
+#: Main.qml:544 Main.qml:561
 msgid "Ok"
 msgstr ""
 
-#: Main.qml:569
+#: Main.qml:558
 msgid "Confirmation"
 msgstr ""
 
-#: Main.qml:570
+#: Main.qml:559
 msgid "Your settings have been saved!"
 msgstr ""
 
-#: Main.qml:585
+#: Main.qml:574
 msgid "Select a tempo"
 msgstr ""
 
-#: Main.qml:621
+#: Main.qml:610
 msgid "Tempo Finder"
 msgstr ""
 
-#: Main.qml:627
+#: Main.qml:616
 msgid ""
 "The tempo finder determines a tempo based on the tempo of two clicks. Please "
 "use the button below to click twice for a tempo."
 msgstr ""
 
-#: Main.qml:635 Main.qml:643
+#: Main.qml:624 Main.qml:632
 msgid "Press"
 msgstr ""
 
-#: Main.qml:657
+#: Main.qml:646
 msgid "Press Again"
 msgstr ""
 
-#: Main.qml:668
+#: Main.qml:657
 msgid "0"
 msgstr ""
 
-#: Main.qml:673
+#: Main.qml:662
 msgid "bpm"
 msgstr ""
 
-#: Main.qml:683
+#: Main.qml:672
 msgid "Close"
 msgstr ""
 
-#: Main.qml:689
+#: Main.qml:678
 msgid "Use This Tempo"
 msgstr ""
 
-#: Main.qml:706
+#: Main.qml:695
 msgid "Please only submit a number that is between 30 and 240"
 msgstr ""
 
-#: Main.qml:732
+#: Main.qml:721
 msgid "uMetronome"
 msgstr ""
 
-#: Main.qml:1214
+#: Main.qml:1203
 msgid "Tempo"
 msgstr ""
 
-#: Main.qml:1370
+#: Main.qml:1359
 msgid "Main beat"
 msgstr ""
 
-#: Main.qml:1381 Main.qml:1521
+#: Main.qml:1370 Main.qml:1510
 msgid "Volume"
 msgstr ""
 
-#: Main.qml:1509
+#: Main.qml:1498
 msgid "Sub beat"
 msgstr ""
 
-#: Main.qml:1615
+#: Main.qml:1604
 msgid "Save Current Settings"
 msgstr ""

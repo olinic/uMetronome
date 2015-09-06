@@ -17,12 +17,6 @@ import "components/effectFunctions.js" as EffectFunctions
 */
 
 
-/*!
-    \brief MainView with Tabs element.
-           First Tab has a single Label and
-           second Tab has a single ToolbarAction.
-*/
-
 MainView {
     id: mainView
     // objectName for functional testing purposes (autopilot-qt5)
@@ -35,25 +29,28 @@ MainView {
      This property enables the application to change orientation
      when the device is rotated. The default is false.
     */
-    useDeprecatedToolbar: false
     automaticOrientation: true
+
+    useDeprecatedToolbar: false // do not use the old toolbar, use the new header!
 
     anchorToKeyboard: true
 
 
-    width: units.gu(50) // change to fill screen
+    width: units.gu(50)
     height: units.gu(75)
 
-    //button colors
+    // -------------------- BUTTON COLORS ------------------------
     property string positiveColor: "#3fb24f" //green
     property string primaryColor: "#dd4814" //orange
     property string negativeColor: "#fc4949" //red
 
+
     property int tempoPickerHeight: units.gu(20)
 
-    property variant beatPattern: ["main", "sub"]
+    property variant beatPattern: ["main", "sub"];      // used to play specific patterns
 
 
+    // ---------------------------------------------------- SOUND FUNCTIONS --------------------------------------------------------
     function calcInterval(bpm, subdivisions) { // calculates the time in ms between each beat and sub-beat
         var interval = 60000/bpm                // beats per minute
         interval = interval/subdivisions        // divide to include sub-beats
@@ -142,7 +139,7 @@ MainView {
     }
 
 
-
+    // --------------------------------------------------------- LIST OF BEATS ----------------------------------------------
     // list of all the types of beats
     ListModel {
         id: beats
@@ -369,7 +366,7 @@ MainView {
     }
 
 
-
+    // ------------------------------------------------------ SETUP SOUND EFFECTS -----------------------------------------
     // Creates sound effects for all the sounds
     ListModel {
         id: soundFiles
@@ -388,51 +385,40 @@ MainView {
         }
     }
 
-
+    // ---------------------------------------------------- TIMER ----------------------------------------------------------
     // Timer handles all of the timing of beats
     Timer {
         id: timer
         interval: 500
         repeat: true
         running: false
-        triggeredOnStart: false
+        triggeredOnStart: false             // do not start automatically
         property int num: 0
         property int beat: 0
         property int subdivisions: 2
-        property int tempoDivisions: 2 //divisions for calculating the tempo
+        property int tempoDivisions: 2      // divisions for calculating the tempo
         property int bpmCount: 120
         property string pattern: ""
         property string silentPattern: ""
 
-        // store the pattern into an array to save on computational costs
-        property var mainBeats: []
-        property int mainBeatIndex: 0 // store the index to prevent from looping all the time
 
-        property var silentBeats: []
-        property int silentBeatIndex: 0
-
-
-
-
-        onTriggered: {
+        onTriggered: {                      // when the timer activates play a sound
             playBeat(num, subdivisions);
         }
 
         onPatternChanged: {
-            mainBeats = str2NumArray(pattern);
-            buildBeatPattern(subdivisions, pattern, silentPattern);
+            buildBeatPattern(subdivisions, pattern, silentPattern); // update the beat pattern
         }
         onSilentPatternChanged: {
-            silentBeats = str2NumArray(silentPattern);
-            buildBeatPattern(subdivisions, pattern, silentPattern);
+            buildBeatPattern(subdivisions, pattern, silentPattern); // update the beat pattern
         }
 
 
-        function str2NumArray(str) {
+        function str2NumArray(str) {        // internal function; converts a string to an array of numbers
+                                            // ex. "2348" --> [2, 3, 4, 8]
             var array = [];
             for (var i=0; i < str.length; i++) {
                 array[i] = parseInt(str.charAt(i));
-                //console.log(array[i])
             }
             return array;
         }
@@ -458,27 +444,26 @@ MainView {
         }
     }
 
+    // ------------------------------------------- BEAT SELECTOR ---------------------------------------------
     Component {
-
          id: beatSelector
-         Popover {
+         Popover {      // popover to select beat
              id: popover
              Column {
                  height: pageLayout.height
-                 width: 200
+
                  anchors {
                      top: parent.top
                      left: parent.left
                      right: parent.right
                  }
 
-                 Header {
+                 Header {       // Title of the beat selector
                      id: header
-
                      text: i18n.tr("Choose from beat selection")
                  }
 
-                 ListView {
+                 ListView {     // List all the beats
                      height: pageLayout.height - header.height
                      width: parent.width
 
@@ -489,23 +474,23 @@ MainView {
                          height: units.gu(1)
 
                          Text {
-                             text: section
+                             text: section      // get the section name
                              font.bold: true
                          }
                      }
 
-                     model: beats
-                     delegate: Standard {
-                         text: name
-                         onClicked: {
-                             beatButton.text = i18n.tr(name)
-                             timer.subdivisions = number
+                     model: beats               // fill the ListView with the beats
+                     delegate: Standard {       // with each beat, use a Standard item
+                         text: name             // display the name of the beat
+                         onClicked: {           // Do this when the name is clicked
+                             beatButton.text = i18n.tr(name)    // update the name of the button
+                             timer.subdivisions = number        // update the properties of the timer
                              timer.num = 0
                              timer.pattern = pattern
                              timer.silentPattern = silentPattern
                              timer.tempoDivisions = tempoDiv
-                             beatImage.source = "icons/" + img
-                             hide()
+                             beatImage.source = "icons/" + img  // update the image of the beat
+                             hide()             // I am done with the beat selector, so hide it
                          }
                      }
                  }
@@ -513,8 +498,10 @@ MainView {
          }
     }
 
-    Component {
+    // ---------------------------------------- SOUND SELECTOR ------------------------------------------
+    // for selecting the sound for the main beat and sub beat
 
+    Component {
          id: soundSelector
          Popover {
              id: soundPopover
@@ -527,7 +514,7 @@ MainView {
                      right: parent.right
                  }
 
-                 Header {
+                 Header {           // Title for the sound selector
                      id: header
                      text: i18n.tr("Choose from sound selection")
                  }
@@ -538,19 +525,18 @@ MainView {
 
                      model: soundFiles
                      delegate: Standard {
-                         text: i18n.tr(name)
+                         text: i18n.tr(name)        // display the name of the sound
                          onClicked: {
-                             caller.input = file
-                             if(!timer.running) {
+                             caller.input = file    // update the sound
 
+                             if(!timer.running) {   // if the metronome is not playing, play a sample sound
                                  var theEffect = EffectFunctions.getEffect(file)
                                  theEffect.play()
-
                              }
                          }
                      }
                  }
-                 Button {
+                 Button {           // Okay button to hide the sound selector
                      id: okButton
                      text: i18n.tr("Ok")
                      color: positiveColor
@@ -562,6 +548,9 @@ MainView {
          }
     }
 
+
+    // ------------------------------------------------ SAVE SETTINGS DIALOG ---------------------------------------------------
+    // popup that display when the "save settings" button is clicked
     Component {
         id: dialog
         Dialog {
@@ -571,13 +560,13 @@ MainView {
             Button {
                 text: i18n.tr("Ok")
                 color: positiveColor
-                onClicked: PopupUtils.close(dialogue)
+                onClicked: PopupUtils.close(dialogue)   // close the dialog when the user clicks Ok
             }
         }
     }
 
 
-
+    // ------------------------------------------------- TEMPO SELECTION FOR WIDE VIEW -------------------------------------------
     Component {
         id: extraTempoSection
         DefaultSheet {
@@ -595,8 +584,6 @@ MainView {
                     horizontalCenter: parent.horizontalCenter
                 }
 
-
-
                 onChanged: {
                     //update the other picker
                     //console.log(bpm);
@@ -606,12 +593,12 @@ MainView {
             }
 
             onDoneClicked: {
-                //timer.doneClicked = timer.doneClicked*-1
                 PopupUtils.close(tempoSheet)
             }
         }
     }
 
+    // --------------------------------------------------- TEMPO FINDER ------------------------------------------------------
     //Tempo Finder Dialog
     Component {
         id: tempoFinder
@@ -634,16 +621,15 @@ MainView {
 
                         text: i18n.tr("Press")
                         color: primaryColor
-                        property int altValue: 0
-                        property double timeOne: 0
+                        property int altValue: 0    // used to alternate the Text of the "Press" button
+                        property double timeOne: 0  // used to calculate the bpm by using the difference between timeOne and timeTwo
                         property double timeTwo: 0
                         onClicked: {
-                            altValue += 1
+                            altValue += 1           // alternate value
                             if (altValue%2 == 0) {
                                 text = i18n.tr("Press")
 
                                 //this runs after the second click; therefore, get the second time
-
                                 timeTwo = Number(new Date().getTime());
 
                                 //calculate bpm
@@ -658,18 +644,16 @@ MainView {
 
                                 //this runs after the first click; therefore, get the first timeOne
                                 timeOne = Number(new Date().getTime());
-
-
                             }
                         }
                     }
-                    Label {
+                    Label {     // displays the tempo from the two clicks
                         id: tempoFinderTempo
                         text: i18n.tr("0")
                         fontSize: "large"
                         anchors.verticalCenter: parent.verticalCenter
                     }
-                    Label {
+                    Label {     // displays "bpm" next to the tempo
                         text: i18n.tr("bpm")
                         fontSize: "large"
                         anchors.verticalCenter: parent.verticalCenter
@@ -694,9 +678,6 @@ MainView {
                             //set the tempo
                             var tempo = tempoFinderTempo.text*1;
                             if (tempo >= 30 && tempo <= 240) {
-                                //timer.finderCount = tempoFinderTempo.text*1 //when the finderCount is set, the picker will use it to update the bpm
-                                //console.log("Set and update Pickers")
-                                //mainTempoPicker.update(tempo);
                                 timer.bpmCount = tempo;
                                 tempoFinderDialog.closing();
                                 PopupUtils.close(tempoFinderDialog)
@@ -704,10 +685,7 @@ MainView {
                             else {
                                 //display help to user
                                 userHelp.text = i18n.tr("Please only submit a number that is between 30 and 240")
-
                             }
-
-
                         }
                     }
                 }
@@ -722,7 +700,7 @@ MainView {
         }
     }
 
-
+    // -------------------------------------------------------- TABS THAT DISPLAY CONTENT --------------------------------------------------
     //These are the tabs to be displayed
     Tabs {
         id: tabs
@@ -734,13 +712,10 @@ MainView {
             page: Page {
                id: metronomePage
 
-               head.actions: [
-
+               head.actions: [      // add buttons to the header
                     StartToolButton {},
                     SettingsToolButton {}
                ]
-
-
 
                Layouts {
                    id: pageLayout
@@ -760,9 +735,6 @@ MainView {
 
                    }
 
-                   onWidthChanged: {
-
-                   }
 
                    layouts: [
                         ConditionalLayout {
@@ -782,8 +754,6 @@ MainView {
                                         left: parent.left
                                         top: parent.top
                                     }
-
-
                                 }
 
 
