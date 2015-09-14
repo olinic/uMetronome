@@ -393,11 +393,11 @@ MainView {
         repeat: true
         running: false
         triggeredOnStart: false             // do not start automatically
-        property int num: 0
-        property int beat: 0
-        property int subdivisions: 2
+        property int num: 0                 // num for the current beat (same as the common use for i)
+        property int beat: 0                // used for controlling the state of uMetronome (state is used for the rotation of the needle)
+        property int subdivisions: 2        // how many beats are in the measure (corresponds to number in the list of beats)
         property int tempoDivisions: 2      // divisions for calculating the tempo
-        property int bpmCount: 120
+        property int bpmCount: 120          // bpm
         property string pattern: ""
         property string silentPattern: ""
 
@@ -423,9 +423,11 @@ MainView {
             return array;
         }
 
-        Component.onCompleted: {
+        Component.onCompleted: {            // do this on startup
             tempoUpdate();
         }
+
+        // update when a change is made
         onSubdivisionsChanged: {
             tempoUpdate();
             buildBeatPattern(subdivisions, pattern, silentPattern);
@@ -437,6 +439,7 @@ MainView {
             tempoUpdate();
         }
 
+        // define how to update the tempo
         function tempoUpdate() {
             interval = calcInterval(bpmCount, tempoDivisions)
             leftRotation.duration = interval*subdivisions
@@ -447,10 +450,10 @@ MainView {
     // ------------------------------------------- BEAT SELECTOR ---------------------------------------------
     Component {
          id: beatSelector
-         Popover {      // popover to select beat
+         Popover {                          // popover to select beat
              id: popover
              Column {
-                 height: pageLayout.height
+                 height: pageLayout.height  // fill to the height of the page
 
                  anchors {
                      top: parent.top
@@ -458,19 +461,19 @@ MainView {
                      right: parent.right
                  }
 
-                 Header {       // Title of the beat selector
+                 Header {                   // Title of the beat selector
                      id: header
                      text: i18n.tr("Choose from beat selection")
                  }
 
-                 ListView {     // List all the beats
+                 ListView {                 // List all the beats
                      height: pageLayout.height - header.height
                      width: parent.width
 
-                     section.property: "type"
+                     // Define how to display section headers in the beat list
+                     section.property: "type"   // use this property of the beats
                      section.delegate: Rectangle {
                          width: parent.width
-
                          height: units.gu(1)
 
                          Text {
@@ -482,6 +485,7 @@ MainView {
                      model: beats               // fill the ListView with the beats
                      delegate: Standard {       // with each beat, use a Standard item
                          text: name             // display the name of the beat
+
                          onClicked: {           // Do this when the name is clicked
                              beatButton.text = i18n.tr(name)    // update the name of the button
                              timer.subdivisions = number        // update the properties of the timer
@@ -506,7 +510,7 @@ MainView {
          Popover {
              id: soundPopover
              Column {
-                 height: pageLayout.height
+                 height: pageLayout.height  // fill the height of the page
                  width: 200
                  anchors {
                      top: parent.top
@@ -514,7 +518,7 @@ MainView {
                      right: parent.right
                  }
 
-                 Header {           // Title for the sound selector
+                 Header {                   // Title for the sound selector
                      id: header
                      text: i18n.tr("Choose from sound selection")
                  }
@@ -523,9 +527,11 @@ MainView {
                      height: pageLayout.height - header.height - okButton.height
                      width: parent.width
 
-                     model: soundFiles
-                     delegate: Standard {
+                     model: soundFiles              // populate the list with the sounds
+
+                     delegate: Standard {           // use a Standard to display each sound
                          text: i18n.tr(name)        // display the name of the sound
+
                          onClicked: {
                              caller.input = file    // update the sound
 
@@ -536,7 +542,7 @@ MainView {
                          }
                      }
                  }
-                 Button {           // Okay button to hide the sound selector
+                 Button {                           // Okay button to close the sound selector
                      id: okButton
                      text: i18n.tr("Ok")
                      color: positiveColor
@@ -575,7 +581,7 @@ MainView {
 
 
             contentsHeight: insideComponent.height
-            doneButton: true
+            doneButton: true                            // include a done button
 
             ATempoPicker {
                 id: insideComponent
