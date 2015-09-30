@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-05 18:13-0700\n"
+"POT-Creation-Date: 2015-09-30 16:53-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,17 +21,72 @@ msgstr ""
 msgid "Metronome"
 msgstr ""
 
-#: components/SettingsToolButton.qml:7 Main.qml:1215
+#: components/TempoDialog.qml:9
+msgid "Select a tempo"
+msgstr ""
+
+#: components/TempoDialog.qml:25 components/SaveSettingsDialog.qml:13
+#: Main.qml:282
+msgid "Ok"
+msgstr ""
+
+#: components/SettingsToolButton.qml:7 Main.qml:798
 msgid "Settings"
 msgstr ""
 
 #: components/StartToolButton.qml:6 components/StartToolButton.qml:17
-#: Main.qml:1157
+#: Main.qml:740
 msgid "Start"
 msgstr ""
 
-#: components/StartToolButton.qml:13 Main.qml:1186
+#: components/StartToolButton.qml:13 Main.qml:769
 msgid "Stop"
+msgstr ""
+
+#: components/SaveSettingsDialog.qml:10
+msgid "Confirmation"
+msgstr ""
+
+#: components/SaveSettingsDialog.qml:11
+msgid "Your settings have been saved!"
+msgstr ""
+
+#: components/TempoFinder.qml:12
+msgid "Tempo Finder"
+msgstr ""
+
+#: components/TempoFinder.qml:18
+msgid ""
+"The tempo finder determines a tempo based on the tempo of two clicks. Please "
+"use the button below to click twice for a tempo."
+msgstr ""
+
+#: components/TempoFinder.qml:26 components/TempoFinder.qml:34
+msgid "Press"
+msgstr ""
+
+#: components/TempoFinder.qml:47
+msgid "Press Again"
+msgstr ""
+
+#: components/TempoFinder.qml:56
+msgid "0"
+msgstr ""
+
+#: components/TempoFinder.qml:61
+msgid "bpm"
+msgstr ""
+
+#: components/TempoFinder.qml:71
+msgid "Close"
+msgstr ""
+
+#: components/TempoFinder.qml:77
+msgid "Use This Tempo"
+msgstr ""
+
+#: components/TempoFinder.qml:91
+msgid "Please only submit a number that is between 30 and 240"
 msgstr ""
 
 #: ui/WorldTab.qml:6
@@ -66,88 +121,26 @@ msgstr ""
 msgid "Toolbar tapped"
 msgstr ""
 
-#: Main.qml:467
-msgid "Choose from beat selection"
-msgstr ""
-
-#: Main.qml:521
-msgid "Choose from sound selection"
-msgstr ""
-
-#: Main.qml:544 Main.qml:561
-msgid "Ok"
-msgstr ""
-
-#: Main.qml:558
-msgid "Confirmation"
-msgstr ""
-
-#: Main.qml:559
-msgid "Your settings have been saved!"
-msgstr ""
-
-#: Main.qml:574
-msgid "Select a tempo"
-msgstr ""
-
-#: Main.qml:610
-msgid "Tempo Finder"
-msgstr ""
-
-#: Main.qml:616
-msgid ""
-"The tempo finder determines a tempo based on the tempo of two clicks. Please "
-"use the button below to click twice for a tempo."
-msgstr ""
-
-#: Main.qml:624 Main.qml:632
-msgid "Press"
-msgstr ""
-
-#: Main.qml:646
-msgid "Press Again"
-msgstr ""
-
-#: Main.qml:657
-msgid "0"
-msgstr ""
-
-#: Main.qml:662
-msgid "bpm"
-msgstr ""
-
-#: Main.qml:672
-msgid "Close"
-msgstr ""
-
-#: Main.qml:678
-msgid "Use This Tempo"
-msgstr ""
-
-#: Main.qml:695
-msgid "Please only submit a number that is between 30 and 240"
-msgstr ""
-
-#: Main.qml:721
+#: Main.qml:312
 msgid "uMetronome"
 msgstr ""
 
-#: Main.qml:1203
+#: Main.qml:786
 msgid "Tempo"
 msgstr ""
 
-#: Main.qml:1359
+#: Main.qml:942
 msgid "Main beat"
 msgstr ""
 
-#: Main.qml:1370 Main.qml:1510
+#: Main.qml:953 Main.qml:1091
 msgid "Volume"
 msgstr ""
 
-#: Main.qml:1498
+#: Main.qml:1079
 msgid "Sub beat"
 msgstr ""
 
-#: Main.qml:1604
+#: Main.qml:1185
 msgid "Save Current Settings"
 msgstr ""

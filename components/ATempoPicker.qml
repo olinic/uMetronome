@@ -9,6 +9,9 @@ Item {
     id: tempoSection
     //Layouts.item: "tempoItem"
 
+    height: childrenRect.height;
+    width: childrenRect.width;
+
     function getUpdate() { // do not use for regular updates (only finder updates)
         // update remains false so that a change is registered and can propagate
         bpm = timer.bpmCount;

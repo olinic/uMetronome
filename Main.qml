@@ -44,10 +44,15 @@ MainView {
     property string primaryColor: "#dd4814" //orange
     property string negativeColor: "#fc4949" //red
 
+    // ------------------- ENUMERATIONS --------------------------
+    property int main: 1;
+    property int sub: 2;
+    property int silent: 3;
+
 
     property int tempoPickerHeight: units.gu(20)
 
-    property variant beatPattern: ["main", "sub"];      // used to play specific patterns
+    property variant beatPattern: [main, sub];      // used to play specific patterns
 
 
     // ---------------------------------------------------- SOUND FUNCTIONS --------------------------------------------------------
@@ -79,25 +84,25 @@ MainView {
     function buildBeatPattern(numOfBeats, pattern, silentPattern) {
         beatPattern.splice(numOfBeats, 7);                 // reduces the array to the length of number of beats
 
-        beatPattern[0] = "main";                        // The first beat should be a main beat
+        beatPattern[0] = main;                        // The first beat should be a main beat
 
         // insert sub beats
         for (var i=1; i < numOfBeats; i++) {            // set the rest of the indices as sub beats, we will insert main beats or silent beats later
-            beatPattern[i] = "sub";                     // set that index as a sub beat
+            beatPattern[i] = sub;                     // set that index as a sub beat
         }
 
         // insert main beats based on pattern
         for (var i=0; i < pattern.length; i++) {
             var index;
             index = parseInt(pattern.charAt(i));        // get the index
-            beatPattern[index] = "main"                 // set that index as a main beat
+            beatPattern[index] = main;                 // set that index as a main beat
         }
 
         // insert silent beats based on pattern
         for (var i=0; i < silentPattern.length; i++) {
             var index;
             index = parseInt(silentPattern.charAt(i));  // get the index
-            beatPattern[index] = "silent"               // set that index as a silent beat
+            beatPattern[index] = silent;               // set that index as a silent beat
         }
 
         /*console.log(pattern);                         // debugging
@@ -119,10 +124,10 @@ MainView {
         }
 
 
-        if (beatPattern[index] == "main") {     // play main beat if we are supposed to
+        if (beatPattern[index] == main) {     // play main beat if we are supposed to
             playMainSound();
         }
-        else if (beatPattern[index] == "sub") { // play sub beat if we are supposed to
+        else if (beatPattern[index] == sub) { // play sub beat if we are supposed to
             playSubSound();
         }
         // else do nothing "silent"             // we are done!
@@ -139,230 +144,8 @@ MainView {
     }
 
 
-    // --------------------------------------------------------- LIST OF BEATS ----------------------------------------------
-    // list of all the types of beats
-    ListModel {
-        id: beats
-        /*
-          name      // primary name of beat
-          number    // how many beats are in the measure
-          tempoDiv  // how to divide the time
-          pattern   // pattern for irregular beats
-          silentpattern // pattern for silent beats
-          img       // image name for beat
-          type      // category of the beat
-
-        */
-
-        ListElement {
-            name: "Quarter"
-            number: 1
-            tempoDiv: 1
-            pattern: ""
-            silentPattern: ""
-            img: "quarter.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Eighth"
-            number: 2
-            tempoDiv: 2
-            pattern: ""
-            silentPattern: ""
-            img: "eighth.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Triplet"
-            number: 3
-            tempoDiv: 3
-            pattern: ""
-            silentPattern: ""
-            img: "triplet.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Triplet (Fall)"
-            number: 3
-            tempoDiv: 3
-            pattern: ""
-            silentPattern: "1"
-            img: "fallTriplet.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Triplet (Rise)"
-            number: 3
-            tempoDiv: 3
-            pattern: ""
-            silentPattern: "2"
-            img: "riseTriplet.svg"
-            type: "Typical Beats"
-        }
-
-        ListElement {
-            name: "Sixteenth"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: ""
-            img: "sixteenth.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Sixteenth (And A)"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "1"
-            img: "sixteenthAndA.svg"
-            type: "Typical Beats"
-        }
-        ListElement {
-            name: "Dotted Eighth"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "12"
-            img: "dottedEighth.svg"
-            type: "Typical Beats"
-        }
-
-        ListElement {
-            name: "Dotted Eighth (Rise)"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "23"
-            img: "dottedEighthRise.svg"
-            type: "Uncommon Beats"
-        }
-        ListElement {
-            name: "Sixteenth (E And)"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "3"
-            img: "sixteenthEAnd.svg"
-            type: "Uncommon Beats"
-        }
-        ListElement {
-            name: "Sixteenth (E A)"
-            number: 4
-            tempoDiv: 4
-            pattern: ""
-            silentPattern: "2"
-            img: "sixteenthEA.svg"
-            type: "Uncommon Beats"
-        }
-        ListElement {
-            name: "Sixtuplet"
-            number: 6
-            tempoDiv: 6
-            pattern: ""
-            silentPattern: ""
-            img: "sixtuplet.svg"
-            type: "Uncommon Beats"
-        }
-        ListElement {
-            name: "4/4 Quarter"
-            number: 4
-            tempoDiv: 1
-            pattern: ""
-            silentPattern: ""
-            img: "44quarter.svg"
-            type: "Common Measures"
-        }
-        ListElement {
-            name: "3/4 Quarter"
-            number: 3
-            tempoDiv: 1
-            pattern: ""
-            silentPattern: ""
-            img: "34quarter.svg"
-            type: "Common Measures"
-        }
-        ListElement {
-            name: "2/2 Cut Time"
-            number: 2
-            tempoDiv: 1
-            pattern: ""
-            silentPattern: ""
-            img: "cutTime.svg"
-            type: "Common Measures"
-        }
-        ListElement {
-            name: "5/8 (3-2)"
-            number: 5
-            tempoDiv: 2
-            pattern: "3"
-            silentPattern: ""
-            img: "32.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "5/8 (2-3)"
-            number: 5   //number of beats in the measure
-            tempoDiv: 2 //number to divide by to calc tempo
-            pattern: "2"
-            silentPattern: ""
-            img: "23.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "7/8 (3-2-2)"
-            number: 7
-            tempoDiv: 2
-            pattern: "35" // 3-5 --> beat 3 & 5
-            silentPattern: ""
-            img: "322.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "7/8 (2-3-2)"
-            number: 7
-            tempoDiv: 2
-            pattern: "25"
-            silentPattern: ""
-            img: "232.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "7/8 (2-2-3)"
-            number: 7
-            tempoDiv: 2
-            pattern: "24"
-            silentPattern: ""
-            img: "223.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "8/8 (3-3-2)"
-            number: 8
-            tempoDiv: 2
-            pattern: "36"
-            silentPattern: ""
-            img: "332.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "8/8 (3-2-3)"
-            number: 8
-            tempoDiv: 2
-            pattern: "35"
-            silentPattern: ""
-            img: "323.svg"
-            type: "Irregular Beats"
-        }
-        ListElement {
-            name: "8/8 (2-3-3)"
-            number: 8
-            tempoDiv: 2
-            pattern: "25"
-            silentPattern: ""
-            img: "233.svg"
-            type: "Irregular Beats"
-        }
+    Beats {
+        id: beats;
     }
 
 
@@ -447,59 +230,8 @@ MainView {
         }
     }
 
-    // ------------------------------------------- BEAT SELECTOR ---------------------------------------------
-    Component {
-         id: beatSelector
-         Popover {                          // popover to select beat
-             id: popover
-             Column {
-                 height: pageLayout.height  // fill to the height of the page
-
-                 anchors {
-                     top: parent.top
-                     left: parent.left
-                     right: parent.right
-                 }
-
-                 Header {                   // Title of the beat selector
-                     id: header
-                     text: i18n.tr("Choose from beat selection")
-                 }
-
-                 ListView {                 // List all the beats
-                     height: pageLayout.height - header.height
-                     width: parent.width
-
-                     // Define how to display section headers in the beat list
-                     section.property: "type"   // use this property of the beats
-                     section.delegate: Rectangle {
-                         width: parent.width
-                         height: units.gu(1)
-
-                         Text {
-                             text: section      // get the section name
-                             font.bold: true
-                         }
-                     }
-
-                     model: beats               // fill the ListView with the beats
-                     delegate: Standard {       // with each beat, use a Standard item
-                         text: name             // display the name of the beat
-
-                         onClicked: {           // Do this when the name is clicked
-                             beatButton.text = i18n.tr(name)    // update the name of the button
-                             timer.subdivisions = number        // update the properties of the timer
-                             timer.num = 0
-                             timer.pattern = pattern
-                             timer.silentPattern = silentPattern
-                             timer.tempoDivisions = tempoDiv
-                             beatImage.source = "icons/" + img  // update the image of the beat
-                             hide()             // I am done with the beat selector, so hide it
-                         }
-                     }
-                 }
-             }
-         }
+    BeatSelector {
+        id: beatSelector;
     }
 
     // ---------------------------------------- SOUND SELECTOR ------------------------------------------
@@ -518,16 +250,19 @@ MainView {
                      right: parent.right
                  }
 
-                 Header {                   // Title for the sound selector
-                     id: header
-                     text: i18n.tr("Choose from sound selection")
+                 PopoverHeader {
+                     id: sHeader;
+                     text: "Choose from beat selection";
+                     width: parent.width;
                  }
 
                  ListView {
-                     height: pageLayout.height - header.height - okButton.height
+                     height: pageLayout.height - sHeader.height - okButton.height
                      width: parent.width
 
                      model: soundFiles              // populate the list with the sounds
+
+                     clip: true;
 
                      delegate: Standard {           // use a Standard to display each sound
                          text: i18n.tr(name)        // display the name of the sound
@@ -554,156 +289,17 @@ MainView {
          }
     }
 
-
-    // ------------------------------------------------ SAVE SETTINGS DIALOG ---------------------------------------------------
-    // popup that display when the "save settings" button is clicked
-    Component {
-        id: dialog
-        Dialog {
-            id: dialogue
-            title: i18n.tr("Confirmation")
-            text: i18n.tr("Your settings have been saved!")
-            Button {
-                text: i18n.tr("Ok")
-                color: positiveColor
-                onClicked: PopupUtils.close(dialogue)   // close the dialog when the user clicks Ok
-            }
-        }
+    SaveSettingsDialog {
+        id: dialog;
     }
 
 
-    // ------------------------------------------------- TEMPO SELECTION FOR WIDE VIEW -------------------------------------------
-    Component {
+    TempoDialog {
         id: extraTempoSection
-        DefaultSheet {
-            id: tempoSheet
-            title: i18n.tr("Select a tempo")
-
-
-            contentsHeight: insideComponent.height
-            doneButton: true                            // include a done button
-
-            ATempoPicker {
-                id: insideComponent
-                anchors {
-                    top: parent.top
-                    horizontalCenter: parent.horizontalCenter
-                }
-
-                onChanged: {
-                    //update the other picker
-                    //console.log(bpm);
-                    mainTempoPicker.update(bpm);
-                    timer.bpmCount = bpm;
-                }
-            }
-
-            onDoneClicked: {
-                PopupUtils.close(tempoSheet)
-            }
-        }
     }
 
-    // --------------------------------------------------- TEMPO FINDER ------------------------------------------------------
-    //Tempo Finder Dialog
-    Component {
-        id: tempoFinder
-
-        Dialog {
-            id: tempoFinderDialog
-            title: i18n.tr("Tempo Finder")
-            width: pageLayout.width
-            height: pageLayout.height
-
-            signal closing()
-
-            text: i18n.tr("The tempo finder determines a tempo based on the tempo of two clicks. Please use the button below to click twice for a tempo.")
-            Column {
-                spacing: units.gu(1)
-
-                Row {
-                    spacing: units.gu(1)
-                    Button {
-
-                        text: i18n.tr("Press")
-                        color: primaryColor
-                        property int altValue: 0    // used to alternate the Text of the "Press" button
-                        property double timeOne: 0  // used to calculate the bpm by using the difference between timeOne and timeTwo
-                        property double timeTwo: 0
-                        onClicked: {
-                            altValue += 1           // alternate value
-                            if (altValue%2 == 0) {
-                                text = i18n.tr("Press")
-
-                                //this runs after the second click; therefore, get the second time
-                                timeTwo = Number(new Date().getTime());
-
-                                //calculate bpm
-                                if (timeOne != -1 && timeTwo != -1) {
-                                    var milliSec = timeTwo-timeOne
-                                    tempoFinderTempo.text = Math.round(calculateBpm(milliSec))
-                                }
-                            }
-
-                            else {
-                                text = i18n.tr("Press Again")
-
-                                //this runs after the first click; therefore, get the first timeOne
-                                timeOne = Number(new Date().getTime());
-                            }
-                        }
-                    }
-                    Label {     // displays the tempo from the two clicks
-                        id: tempoFinderTempo
-                        text: i18n.tr("0")
-                        fontSize: "large"
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                    Label {     // displays "bpm" next to the tempo
-                        text: i18n.tr("bpm")
-                        fontSize: "large"
-                        anchors.verticalCenter: parent.verticalCenter
-                    }
-                }
-
-                Row {
-                    spacing: units.gu(1)
-                    Button {
-                        id: closeButton
-                        text: i18n.tr("Close")
-                        color: primaryColor
-                        onClicked: PopupUtils.close(tempoFinderDialog)
-                    }
-                    Button {
-                        id: acceptTempoButton
-                        text: i18n.tr("Use This Tempo")
-                        color: primaryColor
-
-
-                        onClicked: {
-                            //set the tempo
-                            var tempo = tempoFinderTempo.text*1;
-                            if (tempo >= 30 && tempo <= 240) {
-                                timer.bpmCount = tempo;
-                                tempoFinderDialog.closing();
-                                PopupUtils.close(tempoFinderDialog)
-                            }
-                            else {
-                                //display help to user
-                                userHelp.text = i18n.tr("Please only submit a number that is between 30 and 240")
-                            }
-                        }
-                    }
-                }
-
-                TextArea {
-                    id: userHelp
-                    readOnly: true
-                    width: parent.width
-                }
-
-            }
-        }
+    TempoFinder {
+        id: tempoFinder;
     }
 
     // -------------------------------------------------------- TABS THAT DISPLAY CONTENT --------------------------------------------------
@@ -1117,8 +713,8 @@ MainView {
                        //color: "red"
 
                        MouseArea {
-                           height: childrenRect.height
-                           width: childrenRect.width
+                           height: beatImage.height
+                           width: beatImage.width
 
                            anchors {
                                bottom: parent.bottom
@@ -1394,8 +990,6 @@ MainView {
                                 EffectFunctions.adjustVolume(value)
                                 var vol = EffectFunctions.getVolume();
                                 EffectFunctions.getMainEffect().volume = vol;
-
-
 
                             }
                         }
