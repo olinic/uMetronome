@@ -1,0 +1,17 @@
+{
+    "name": "@APP_ID@",
+    "description": "description of uMetronome",
+    "architecture": "@CLICK_ARCH@",
+    "title": "@APP_NAME@",
+    "hooks": {
+        "uMetronome": {
+            "apparmor": "uMetronome.apparmor",
+            "desktop":  "uMetronome.desktop"
+        }
+    },
+    "version": "0.1",
+    "maintainer": "Oliver Nichols <oliver.nic012@gmail.com>",
+    "framework" : "ubuntu-sdk-15.04"
+}
+
+

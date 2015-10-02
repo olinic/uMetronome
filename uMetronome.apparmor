@@ -1,6 +1,9 @@
 {
     "policy_groups": [
-        "audio"
+        "networking",
+        "webview"
     ],
     "policy_version": 1.3
 }
+
+

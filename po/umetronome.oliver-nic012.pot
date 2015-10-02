@@ -1,0 +1,127 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-10-02 10:33-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../app/Main-Copy.qml:31 ../app/Main.qml:309
+#: /home/otter/Apps/build-uMetronome-Desktop-Default/po/uMetronome.desktop.in.h:1
+msgid "uMetronome"
+msgstr ""
+
+#: ../app/Main-Copy.qml:37
+msgid "Hello world.."
+msgstr ""
+
+#: ../app/Main-Copy.qml:75
+msgid "Tap me!"
+msgstr ""
+
+#: ../app/Main-Copy.qml:78
+msgid "..from Cpp Backend"
+msgstr ""
+
+#: ../app/Main.qml:279 ../app/SaveSettingsDialog.qml:13
+#: ../app/TempoDialog.qml:25
+msgid "Ok"
+msgstr ""
+
+#: ../app/Main.qml:737 ../app/StartToolButton.qml:6
+#: ../app/StartToolButton.qml:17
+msgid "Start"
+msgstr ""
+
+#: ../app/Main.qml:766 ../app/StartToolButton.qml:13
+msgid "Stop"
+msgstr ""
+
+#: ../app/Main.qml:783
+msgid "Tempo"
+msgstr ""
+
+#: ../app/Main.qml:795 ../app/SettingsToolButton.qml:7
+msgid "Settings"
+msgstr ""
+
+#: ../app/Main.qml:939
+msgid "Main beat"
+msgstr ""
+
+#: ../app/Main.qml:950 ../app/Main.qml:1088
+msgid "Volume"
+msgstr ""
+
+#: ../app/Main.qml:1076
+msgid "Sub beat"
+msgstr ""
+
+#: ../app/Main.qml:1182
+msgid "Save Current Settings"
+msgstr ""
+
+#: ../app/MetronomeToolButton.qml:7
+msgid "Metronome"
+msgstr ""
+
+#: ../app/SaveSettingsDialog.qml:10
+msgid "Confirmation"
+msgstr ""
+
+#: ../app/SaveSettingsDialog.qml:11
+msgid "Your settings have been saved!"
+msgstr ""
+
+#: ../app/TempoDialog.qml:9
+msgid "Select a tempo"
+msgstr ""
+
+#: ../app/TempoFinder.qml:12
+msgid "Tempo Finder"
+msgstr ""
+
+#: ../app/TempoFinder.qml:18
+msgid ""
+"The tempo finder determines a tempo based on the tempo of two clicks. Please "
+"use the button below to click twice for a tempo."
+msgstr ""
+
+#: ../app/TempoFinder.qml:26 ../app/TempoFinder.qml:34
+msgid "Press"
+msgstr ""
+
+#: ../app/TempoFinder.qml:47
+msgid "Press Again"
+msgstr ""
+
+#: ../app/TempoFinder.qml:56
+msgid "0"
+msgstr ""
+
+#: ../app/TempoFinder.qml:61
+msgid "bpm"
+msgstr ""
+
+#: ../app/TempoFinder.qml:71
+msgid "Close"
+msgstr ""
+
+#: ../app/TempoFinder.qml:77
+msgid "Use This Tempo"
+msgstr ""
+
+#: ../app/TempoFinder.qml:91
+msgid "Please only submit a number that is between 30 and 240"
+msgstr ""
