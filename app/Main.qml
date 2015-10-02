@@ -1,7 +1,7 @@
 import QtQuick 2.2
 import UMetronome 1.0                   // import C++ classes
 import QtQuick.LocalStorage 2.0 as Sql  // import database
-import Ubuntu.Components 1.1            // bunch of components
+import Ubuntu.Components 1.2            // bunch of components
 import Ubuntu.Components.ListItems 1.0
 import Ubuntu.Components.Popups 1.0     // dialogs, popovers, etc
 import Ubuntu.Components.Pickers 1.0    // picker for tempo
@@ -30,7 +30,7 @@ MainView {
     */
     automaticOrientation: true
 
-    useDeprecatedToolbar: false // do not use the old toolbar, use the new header!
+    //useDeprecatedToolbar: false // do not use the old toolbar, use the new header!
 
     anchorToKeyboard: true
 
@@ -173,6 +173,7 @@ MainView {
         id: timer
         interval: 500
         singleShot: false
+        property bool running: false;       // do not depend on active for notifications, use this
         property int num: 0                 // num for the current beat (same as the common use for i)
         property int beat: 0                // used for controlling the state of uMetronome (state is used for the rotation of the needle)
         property int subdivisions: 2        // how many beats are in the measure (corresponds to number in the list of beats)
@@ -193,6 +194,18 @@ MainView {
             buildBeatPattern(subdivisions, pattern, silentPattern); // update the beat pattern
         }
 
+
+        function play() {
+            start();
+            running = true;
+        }
+
+        function pause() {
+            stop();
+            running = false;
+            num = 0
+            beat = 0
+        }
 
         function str2NumArray(str) {        // internal function; converts a string to an array of numbers
                                             // ex. "2348" --> [2, 3, 4, 8]
@@ -236,6 +249,8 @@ MainView {
 
     Component {
          id: soundSelector
+
+
          Popover {
              id: soundPopover
              Column {
@@ -249,7 +264,7 @@ MainView {
 
                  PopoverHeader {
                      id: sHeader;
-                     text: "Choose from beat selection";
+                     text: "Choose from sound selection";
                      width: parent.width;
                  }
 
@@ -269,7 +284,33 @@ MainView {
 
                              if(!timer.active) {   // if the metronome is not playing, play a sample sound
                                  var theEffect = EffectFunctions.getEffect(file)
+
+                                 // get volume of effect based on selector (main or sub)
+                                 var playVol = 1;
+                                 var setBack = false;       // do we need to set the volume back? we do not want to change the other effect's volume to mess it up
+                                 var setBackVol = 1;
+
+                                 if (caller.type == main) {
+                                     playVol = EffectFunctions.getVolume();
+                                     if (EffectFunctions.getMainSubEffect() == theEffect) {
+                                         setBack = true;
+                                         setBackVol = EffectFunctions.getSubVolume();
+                                     }
+                                 } else if (caller.type == sub) {
+                                     playVol = EffectFunctions.getSubVolume();
+                                     if (EffectFunctions.getMainEffect() == theEffect) {
+                                         setBack = true;
+                                         setBackVol = EffectFunctions.getVolume();
+                                     }
+                                 }
+
+                                 theEffect.volume = playVol;          // volume to play at
                                  theEffect.play()
+
+                                 if (setBack) {
+                                     theEffect.volume = setBackVol;
+                                 }
+
                              }
                          }
                      }
@@ -312,7 +353,6 @@ MainView {
                id: metronomePage
 
                head.actions: [      // add buttons to the header
-                    StartToolButton {},
                     SettingsToolButton {}
                ]
 
@@ -338,7 +378,7 @@ MainView {
                    layouts: [
                         ConditionalLayout {
                             name: "wide"
-                            when: pageLayout.width > pageLayout.height
+                            when: pageLayout.width > pageLayout.height*1.3
 
                             Item {
                                 anchors.fill: parent
@@ -348,7 +388,7 @@ MainView {
                                     item: "metronomeItem"
 
                                     height: parent.height - units.gu(1)
-                                    width: parent.width - wStartItem.width
+                                    width: parent.width - wBeatImgItem.width;
                                     anchors {
                                         left: parent.left
                                         top: parent.top
@@ -359,16 +399,17 @@ MainView {
                                 ItemLayout {
                                     id: wExtraTempoItem
                                     item: "extraTempoItem"
-                                    width: units.gu(10)
+                                    width: wBeatImgItem.width;
                                     height: units.gu(5)
 
                                     anchors {
                                         right: parent.right
-                                        bottom: wStartItem.top
+                                        bottom: wBeatImgItem.top
                                     }
                                 }
 
-                                ItemLayout {
+                                ItemLayout {    // the tempo item needs to exist in this conditional layout even though it is invisible,
+                                                // otherwise it will be gone when we switch to the other layout
                                     item: "tempoItem"
                                     opacity: 0
                                 }
@@ -377,26 +418,26 @@ MainView {
                                 ItemLayout {
                                     id: wStartItem
                                     item: "startItem"
-                                    width: units.gu(10)
+                                    width: wBeatImgItem.width;
                                     height: units.gu(5)
 
                                     anchors {
-                                        right: parent.right
-                                        bottom: centerHolder.top
+                                        horizontalCenter: wExtraTempoItem.horizontalCenter;
+                                        bottom: wExtraTempoItem.top
                                     }
                                 }
 
 
-                                Rectangle {
+                                /*Rectangle {
                                     id: centerHolder
                                     anchors {
                                         bottom: wStopItem.top
                                         //verticalCenter: parent.verticalCenter //enable this to center again
                                         right: parent.right
                                     }
-                                }
+                                }*/
 
-                                ItemLayout {
+                                /*ItemLayout {
                                     id: wStopItem
                                     item: "stopItem"
                                     width: units.gu(10)
@@ -407,9 +448,9 @@ MainView {
                                         //top: centerHolder.bottom
                                         bottom: wBeatItem.top
                                     }
-                                }
+                                }*/
 
-                                ItemLayout {
+                                /*ItemLayout {
                                     id: wBeatItem
                                     item: "beatItem"
                                     width: units.gu(10)
@@ -420,7 +461,7 @@ MainView {
                                         //top: wStopItem.bottom
                                         bottom: wBeatImgItem.top
                                     }
-                                }
+                                }*/
                                 ItemLayout {
                                     id: wBeatImgItem
                                     item: "beatImgItem"
@@ -439,7 +480,7 @@ MainView {
 
                        ConditionalLayout {
                            name: "default"
-                           when: pageLayout.width <= pageLayout.height && pageLayout.width >= units.gu(31)
+                           when: pageLayout.width <= pageLayout.height*1.3
                            Item {
                                anchors.fill: parent
 
@@ -475,23 +516,23 @@ MainView {
 
 
                                    anchors {
-                                       bottom: beatItem.top
+                                       bottom: startItem.top
                                        margins: units.gu(1)
                                    }
                                }
                                ItemLayout {
                                    id: startItem
                                    item: "startItem"
-                                   width: units.gu(10)
+                                   width: beatImgItem.width;
                                    height: units.gu(5)
                                    anchors {
                                        //top: metronomeItem.bottom
                                        bottom: parent.bottom
-                                       right: beatItem.left
+                                       horizontalCenter: parent.horizontalCenter;
                                        margins: units.gu(1)
                                    }
                                }
-                               ItemLayout {
+                               /*ItemLayout {
                                    id: beatItem
                                    item: "beatItem"
                                    width: units.gu(10)
@@ -514,90 +555,7 @@ MainView {
                                        bottom: parent.bottom
                                        margins: units.gu(1)
                                    }
-                               }
-                           }
-                       },
-
-                       ConditionalLayout {
-                           name: "narrow"
-                           when: pageLayout.width < units.gu(31)
-                           Item {
-                               anchors.fill: parent
-
-                               ItemLayout {
-                                   item: "extraTempoItem"
-                               }
-
-                               //make item id's different from the default (add n- for narrow)
-                               ItemLayout {
-                                   id: nTempoItem
-                                   item: "tempoItem"
-
-                                   width: pageLayout.width
-                                   height: pageLayout.height/2
-                                   //height: tempoPicker.height + units.gu(2)
-                                   anchors {
-                                       top: parent.top
-                                   }
-
-                               }
-                               ItemLayout {
-                                   id: nbeatImgItem
-                                   item: "beatImgItem"
-
-                                   height: tempoPickerHeight + beatImage.height
-                                   width: beatImage.width
-                                   anchors {
-                                       horizontalCenter: parent.horizontalCenter
-                                   }
-                               }
-                               ItemLayout {
-                                   id: nMetronomeItem
-                                   item: "metronomeItem"
-                                   height: parent.height - tempoPickerHeight - nStartItem.height - beatImage.height
-                                   width: parent.width
-
-                                   anchors {
-                                       bottom: nBeatItem.top
-                                       //top: nTempoItem.bottom
-                                   }
-                               }
-                               ItemLayout {
-                                   id: nStartItem
-                                   item: "startItem"
-                                   width: parent.width/3
-                                   height: units.gu(5)
-                                   anchors {
-                                       //top: nMetronomeItem.bottom
-                                       bottom: parent.bottom
-                                       right: nBeatItem.left
-                                       //margins: units.gu(1)
-                                   }
-                               }
-                               ItemLayout {
-                                   id: nBeatItem
-                                   item: "beatItem"
-                                   width: parent.width/3
-                                   height: units.gu(5)
-                                   anchors {
-                                       horizontalCenter: parent.horizontalCenter
-                                       bottom: parent.bottom
-                                       //top: nMetronomeItem.bottom
-                                       //margins: units.gu(1)
-                                   }
-                               }
-                               ItemLayout {
-                                   id: nStopItem
-                                   item: "stopItem"
-                                   width: parent.width/3
-                                   height: units.gu(5)
-                                   anchors {
-                                       left: nBeatItem.right
-                                       bottom: parent.bottom
-                                       //top: nMetronomeItem.bottom
-                                       //margins: units.gu(1)
-                                   }
-                               }
+                               }*/
                            }
                        }
 
@@ -622,9 +580,11 @@ MainView {
                         Layouts.item: "metronomeItem"
 
 
+
+
                        onWidthChanged: {
                            if (width <= 2*height) {
-                               metronomeLine.height = width/2 - units.gu(1)
+                               metronomeLine.height = width/2;
                            }
                        }
                        onHeightChanged: {
@@ -632,6 +592,7 @@ MainView {
                                metronomeLine.height = height
                            }
                        }
+
 
                        Rectangle {
                            anchors {
@@ -651,7 +612,7 @@ MainView {
                                    metronomeLine.height = parent.height
                                }
                                else {
-                                   metronomeLine.height = parent.width/2 - units.gu(1)
+                                   metronomeLine.height = parent.width/2;
                                }
                            }
 
@@ -717,12 +678,22 @@ MainView {
                                bottom: parent.bottom
                            }
 
-                           Image {
-                                id: beatImage
+
+
+                           UbuntuShape {
+                                id: ubeatImage
                                 anchors {
                                     bottom: parent.bottom
                                 }
-                                source: "graphics/icons/eighth.svg"
+                                width: beatImage.width;
+                                height: beatImage.height;
+
+                                backgroundColor: "#F0DDDD";
+
+                                source: Image {
+                                    id: beatImage
+                                    source: "graphics/icons/eighth.svg"
+                                }
                            }
 
                            onClicked: PopupUtils.open(beatSelector, beatButton)
@@ -731,19 +702,53 @@ MainView {
                    }
 
                    //Start
-                   Button {
+                   UbuntuShape {
                        id: startButton
                        Layouts.item: "startItem"
-                       text: i18n.tr("Start")
-                       color: primaryColor
+                       backgroundColor: "#F0DDDD"
+
+                       sourceFillMode: UbuntuShape.PreserveAspectFit;
 
 
+                       source: Image {
+                           id: startImg
+                           source: startButton.playSrc;
 
-                       property int subbeats: 2
-                       onClicked: {
-                           timer.start()
                        }
+
+                       property string playSrc: "graphics/icons/play.svg";
+                       property string stopSrc: "graphics/icons/stop.svg";
+                       property bool playing: timer.running;
+                       property int subbeats: 2
+
+                       MouseArea {
+                           anchors.fill: parent;
+
+                           onClicked: {
+                               if (startButton.playing) {
+                                   // stop
+                                   timer.pause();
+                               } else {
+                                   timer.play()
+                               }
+                           }
+                       }
+
+
+
+                       onPlayingChanged: {
+                           if (playing) {
+                               // give option to stop
+                               startImg.source = stopSrc;
+                           } else {
+                               // give option to play
+                               startImg.source = playSrc;
+                           }
+                       }
+
                    }
+
+
 
 
                    // Beat Selection goes here
@@ -769,9 +774,8 @@ MainView {
 
 
                        onClicked: {
-                           timer.stop()
-                           timer.num = 0
-                           timer.beat = 0
+                           timer.pause()
+
                        }
                    }
 
@@ -796,8 +800,6 @@ MainView {
             page: Page {
 
                 head.actions: [
-
-                    StartToolButton {},
                     MetronomeToolButton {}
                 ]
 
@@ -1014,6 +1016,7 @@ MainView {
                                 top: mainBeatSlider.bottom
                             }
 
+                            property int type: main;
                             property string input: ""
                             onClicked: PopupUtils.open(soundSelector, mainBeatButton)
                             onInputChanged: {
@@ -1150,6 +1153,8 @@ MainView {
                             iconSource: "graphics/icons/noteIcon.svg"
                             color: primaryColor
                             width: units.gu(5)
+
+                            property int type: sub;
                             property string input: ""
                             onClicked: PopupUtils.open(soundSelector, subBeatButton)
                             onInputChanged: {
