@@ -144,6 +144,15 @@ ListModel {
         type: "Common Measures"
     }
     ListElement {
+        name: "5/4 Quarter"
+        number: 5
+        tempoDiv: 1
+        pattern: ""
+        silentPattern: ""
+        img: "54quarter.svg"
+        type: "Common Measures"
+    }
+    ListElement {
         name: "2/2 Cut Time"
         number: 2
         tempoDiv: 1
