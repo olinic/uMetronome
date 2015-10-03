@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-02 17:19-0400\n"
+"POT-Creation-Date: 2015-10-03 12:42-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../app/Main-Copy.qml:31 ../app/Main.qml:350
+#: ../app/Main-Copy.qml:31 ../app/Main.qml:364
 #: /home/otter/Apps/build-uMetronome-Desktop-Default/po/uMetronome.desktop.in.h:1
 msgid "uMetronome"
 msgstr ""
@@ -34,36 +34,36 @@ msgstr ""
 msgid "..from Cpp Backend"
 msgstr ""
 
-#: ../app/Main.qml:320 ../app/SaveSettingsDialog.qml:13
+#: ../app/Main.qml:334 ../app/SaveSettingsDialog.qml:13
 #: ../app/TempoDialog.qml:25
 msgid "Ok"
 msgstr ""
 
-#: ../app/Main.qml:771 ../app/StartToolButton.qml:13
+#: ../app/Main.qml:731 ../app/StartToolButton.qml:13
 msgid "Stop"
 msgstr ""
 
-#: ../app/Main.qml:787
+#: ../app/Main.qml:747
 msgid "Tempo"
 msgstr ""
 
-#: ../app/Main.qml:799 ../app/SettingsToolButton.qml:7
+#: ../app/Main.qml:759 ../app/SettingsToolButton.qml:7
 msgid "Settings"
 msgstr ""
 
-#: ../app/Main.qml:941
+#: ../app/Main.qml:901
 msgid "Main beat"
 msgstr ""
 
-#: ../app/Main.qml:952 ../app/Main.qml:1091
+#: ../app/Main.qml:912 ../app/Main.qml:1051
 msgid "Volume"
 msgstr ""
 
-#: ../app/Main.qml:1079
+#: ../app/Main.qml:1039
 msgid "Sub beat"
 msgstr ""
 
-#: ../app/Main.qml:1187
+#: ../app/Main.qml:1147
 msgid "Save Current Settings"
 msgstr ""
 

@@ -2,6 +2,8 @@ import QtQuick 2.2
 import Ubuntu.Components 1.2
 import Ubuntu.Components.ListItems 1.0
 import Ubuntu.Components.Popups 1.0
+import QtQuick.LocalStorage 2.0 as Sql  // import database
+import "./dbFunctions.js" as DbFunctions
 
 
 // ------------------------------------------- BEAT SELECTOR ---------------------------------------------
@@ -92,13 +94,15 @@ Component {
                          }
                      }
                      onClicked: {           // Do this when the name is clicked
-                         beatButton.text = i18n.tr(name)    // update the name of the button
                          timer.subdivisions = number        // update the properties of the timer
                          timer.num = 0
                          timer.pattern = pattern
                          timer.silentPattern = silentPattern
                          timer.tempoDivisions = tempoDiv
                          beatImage.source = "./graphics/icons/" + img  // update the image of the beat
+
+                         DbFunctions.saveTimeSignature(number, tempoDiv, pattern, silentPattern, img);
+
                          hide()             // I am done with the beat selector, so hide it
                      }
                  }

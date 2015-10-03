@@ -27,7 +27,7 @@ Item {
         tempoPicker.selectedIndex = bpm - tempoPicker.start;
     }
 
-    property int bpm: 120
+    property int bpm: timer.bpmCount;
     property bool updating: false // prevents a loop in bpm changes
     signal changed() // used to indicate if the picker is changing (not the same as updating)
 

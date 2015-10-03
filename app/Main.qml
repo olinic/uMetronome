@@ -178,7 +178,7 @@ MainView {
         property int beat: 0                // used for controlling the state of uMetronome (state is used for the rotation of the needle)
         property int subdivisions: 2        // how many beats are in the measure (corresponds to number in the list of beats)
         property int tempoDivisions: 2      // divisions for calculating the tempo
-        property int bpmCount: 120          // bpm
+        property int bpmCount: 140          // bpm
         property string pattern: ""
         property string silentPattern: ""
 
@@ -217,6 +217,15 @@ MainView {
         }
 
         Component.onCompleted: {            // do this on startup
+            // get stuff from database
+            var items = DbFunctions.getDbItems();
+            subdivisions = items['numBeats'];
+            tempoDivisions = items['tempoDiv'];
+            bpmCount = items['tempo'];
+            pattern = items['pattern'];
+            silentPattern = items['silentPattern'];
+            mainTempoPicker.getUpdate();
+
             tempoUpdate();
         }
 
@@ -230,11 +239,16 @@ MainView {
         }
         onBpmCountChanged: {
             tempoUpdate();
+
+            // update database
+            DbFunctions.saveTempo(bpmCount);
         }
 
         // define how to update the tempo
         function tempoUpdate() {
             interval = calcInterval(bpmCount, tempoDivisions)
+
+            // how fast the needle should move
             leftRotation.duration = interval*subdivisions
             rightRotation.duration = interval*subdivisions
         }
@@ -427,41 +441,6 @@ MainView {
                                     }
                                 }
 
-
-                                /*Rectangle {
-                                    id: centerHolder
-                                    anchors {
-                                        bottom: wStopItem.top
-                                        //verticalCenter: parent.verticalCenter //enable this to center again
-                                        right: parent.right
-                                    }
-                                }*/
-
-                                /*ItemLayout {
-                                    id: wStopItem
-                                    item: "stopItem"
-                                    width: units.gu(10)
-                                    height: units.gu(5)
-
-                                    anchors {
-                                        right: parent.right
-                                        //top: centerHolder.bottom
-                                        bottom: wBeatItem.top
-                                    }
-                                }*/
-
-                                /*ItemLayout {
-                                    id: wBeatItem
-                                    item: "beatItem"
-                                    width: units.gu(10)
-                                    height: units.gu(5)
-
-                                    anchors {
-                                        right: parent.right
-                                        //top: wStopItem.bottom
-                                        bottom: wBeatImgItem.top
-                                    }
-                                }*/
                                 ItemLayout {
                                     id: wBeatImgItem
                                     item: "beatImgItem"
@@ -532,30 +511,6 @@ MainView {
                                        margins: units.gu(1)
                                    }
                                }
-                               /*ItemLayout {
-                                   id: beatItem
-                                   item: "beatItem"
-                                   width: units.gu(10)
-                                   height: units.gu(5)
-                                   anchors {
-                                       horizontalCenter: parent.horizontalCenter
-                                       //top: metronomeItem.bottom
-                                       bottom: parent.bottom
-                                       margins: units.gu(1)
-                                   }
-                               }
-                               ItemLayout {
-                                   id: stopItem
-                                   item: "stopItem"
-                                   width: units.gu(10)
-                                   height: units.gu(5)
-                                   anchors {
-                                       left: beatItem.right
-                                       //top: metronomeItem.bottom
-                                       bottom: parent.bottom
-                                       margins: units.gu(1)
-                                   }
-                               }*/
                            }
                        }
 
@@ -693,6 +648,11 @@ MainView {
                                 source: Image {
                                     id: beatImage
                                     source: "graphics/icons/eighth.svg"
+
+                                    Component.onCompleted: {
+                                        var items = DbFunctions.getDbItems();
+                                        source = "graphics/icons/" + items['beatImage'];
+                                    }
                                 }
                            }
 
@@ -1193,7 +1153,7 @@ MainView {
                         }
 
                         onClicked: {
-                            DbFunctions.saveSettings()
+                            DbFunctions.saveSettings(mainBeatSlider.value, mainBeatLabel.text, subBeatSlider.value, subBeatLabel.text)
                             PopupUtils.open(dialog)
                         }
                     }
