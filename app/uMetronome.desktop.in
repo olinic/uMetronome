@@ -1,6 +1,6 @@
 [Desktop Entry]
 _Name=uMetronome
-Comment=My project description
+Comment=An easy-to-use metronome for music enthusiasts
 Exec=@EXEC@
 Icon=@ICON@
 Terminal=false

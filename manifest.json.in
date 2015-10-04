@@ -1,17 +1,15 @@
 {
-    "name": "@APP_ID@",
-    "description": "description of uMetronome",
+    "name": "umetronome",
+    "description": "An easy-to-use metronome for music enthusiasts",
     "architecture": "@CLICK_ARCH@",
-    "title": "@APP_NAME@",
+    "title": "uMetronome",
     "hooks": {
         "uMetronome": {
             "apparmor": "uMetronome.apparmor",
-            "desktop":  "uMetronome.desktop"
+            "desktop": "uMetronome.desktop"
         }
     },
-    "version": "0.1",
+    "version": "2.2",
     "maintainer": "Oliver Nichols <oliver.nic012@gmail.com>",
-    "framework" : "ubuntu-sdk-15.04"
+    "framework": "ubuntu-sdk-15.04"
 }
-
-
