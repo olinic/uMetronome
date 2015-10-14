@@ -3,7 +3,7 @@ import Ubuntu.Components 1.2
 
 Action {
     iconName: "go-to"
-    iconSource: "./graphics/icons/uMetronome-icon.svg"
+    iconSource: picPath + "uMetronome-icon.svg"
     text: i18n.tr("Metronome")
 
     onTriggered: {

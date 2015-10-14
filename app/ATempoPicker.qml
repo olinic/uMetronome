@@ -34,7 +34,7 @@ Item {
     Button {
         id: tempoFinderButton
         iconName: "search"
-        iconSource: "./graphics/icons/search.svg"
+        iconSource: picPath + "search.svg"
         color: "#1ab6ef"
 
         anchors {

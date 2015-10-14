@@ -43,6 +43,8 @@ MainView {
     property string primaryColor: "#dd4814" //orange
     property string negativeColor: "#fc4949" //red
 
+    property string picPath: "icons/";
+
     // ------------------- ENUMERATIONS --------------------------
     property int main: 1;
     property int sub: 2;
@@ -647,11 +649,11 @@ MainView {
 
                                 source: Image {
                                     id: beatImage
-                                    source: "graphics/icons/eighth.svg"
+                                    source: picPath + "eighth.svg"
 
                                     Component.onCompleted: {
                                         var items = DbFunctions.getDbItems();
-                                        source = "graphics/icons/" + items['beatImage'];
+                                        source = picPath + items['beatImage'];
                                     }
                                 }
                            }
@@ -676,8 +678,8 @@ MainView {
 
                        }
 
-                       property string playSrc: "graphics/icons/play.svg";
-                       property string stopSrc: "graphics/icons/stop.svg";
+                       property string playSrc: picPath + "play.svg";
+                       property string stopSrc: picPath + "stop.svg";
                        property bool playing: timer.running;
                        property int subbeats: 2
 
@@ -968,7 +970,7 @@ MainView {
                         //beat button
                         Button {
                             id: mainBeatButton
-                            iconSource: "graphics/icons/noteIcon.svg"
+                            iconSource: picPath + "noteIcon.svg"
                             color: primaryColor
                             width: units.gu(5)
 
@@ -1110,7 +1112,7 @@ MainView {
                                 left: parent.left
                             }
 
-                            iconSource: "graphics/icons/noteIcon.svg"
+                            iconSource: picPath + "noteIcon.svg"
                             color: primaryColor
                             width: units.gu(5)
 

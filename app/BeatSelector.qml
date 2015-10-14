@@ -80,7 +80,7 @@ Component {
 
                          Image {
                              id: image
-                             source: "./graphics/icons/" + img;
+                             source: picPath + img;
 
                              anchors.horizontalCenter: parent.horizontalCenter;
                          }
@@ -99,7 +99,7 @@ Component {
                          timer.pattern = pattern
                          timer.silentPattern = silentPattern
                          timer.tempoDivisions = tempoDiv
-                         beatImage.source = "./graphics/icons/" + img  // update the image of the beat
+                         beatImage.source = picPath + img  // update the image of the beat
 
                          DbFunctions.saveTimeSignature(number, tempoDiv, pattern, silentPattern, img);
 
