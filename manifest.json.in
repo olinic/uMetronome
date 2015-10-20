@@ -1,15 +1,15 @@
 {
-    "name": "umetronome",
+    "name": "umetronome.otter",
     "description": "An easy-to-use metronome for music enthusiasts",
     "architecture": "@CLICK_ARCH@",
     "title": "uMetronome",
     "hooks": {
         "uMetronome": {
-            "apparmor": "uMetronome.apparmor",
-            "desktop": "uMetronome.desktop"
+            "apparmor": "uMetronome/uMetronome.apparmor",
+            "desktop": "uMetronome/uMetronome.desktop"
         }
     },
-    "version": "2.6",
+    "version": "2.8",
     "maintainer": "Oliver Nichols <oliver.nic012@gmail.com>",
     "framework": "ubuntu-sdk-15.04"
 }

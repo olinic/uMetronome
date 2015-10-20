@@ -251,8 +251,8 @@ MainView {
             interval = calcInterval(bpmCount, tempoDivisions)
 
             // how fast the needle should move
-            leftRotation.duration = interval*subdivisions
-            rightRotation.duration = interval*subdivisions
+            leftRotation.duration = interval*(subdivisions)
+            rightRotation.duration = interval*(subdivisions)
         }
     }
 
@@ -595,7 +595,7 @@ MainView {
                                        RotationAnimation {
                                            id: rightRotation
                                            target: metronomeLine
-                                           duration: timer.interval*timer.subdivisions
+                                           duration: timer.interval*(timer.subdivisions)
                                            direction: RotationAnimation.Shortest
                                            property: "rotation"
                                            from: 300
@@ -606,7 +606,7 @@ MainView {
                                        RotationAnimation {
                                            id: leftRotation
                                            target: metronomeLine
-                                           duration: timer.interval*timer.subdivisions
+                                           duration: timer.interval*(timer.subdivisions - 1)
                                            direction: RotationAnimation.Shortest
                                            property: "rotation"
                                            from: 60
