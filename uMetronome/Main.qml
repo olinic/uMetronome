@@ -115,8 +115,8 @@ MainView {
         if(index%numOfBeats == 0) { // first beat
 
             if(timer.beat == 0) {
-                metronomeLine.state = "rotateRight"  // start the rotation
-                timer.beat = 1                  // prevents activating the clockwise rotation when the needle reaches the right side, the rotation will automatically bring it back
+                metronomeLine.state = "rotateRight"  // rotate right
+                timer.beat = 1
             }
             else {
                 metronomeLine.state = "rotateLeft"
@@ -139,13 +139,10 @@ MainView {
 
     }
 
-
-
     function calculateBpm(ms) {                 // calculates the beats per minute based on the interval of ms (useful for the tempoFinder)
         var bpm = 60000/ms
         return bpm
     }
-
 
     Beats {
         id: beats;
@@ -208,7 +205,7 @@ MainView {
             stop();
 
             running = false;
-            num = 0
+            num = 0     // start on the first beat when we play again
         }
 
         function str2NumArray(str) {        // internal function; converts a string to an array of numbers
@@ -735,7 +732,7 @@ MainView {
 
 
                    //Stop
-                   Button {
+                   /*Button {
                        id: stopButton
                        Layouts.item: "stopItem"
                        text: i18n.tr("Stop")
@@ -747,7 +744,7 @@ MainView {
                            timer.pause()
 
                        }
-                   }
+                   }*/
 
                    //extra tempo button for different layouts
                    Button {
