@@ -115,11 +115,11 @@ MainView {
         if(index%numOfBeats == 0) { // first beat
 
             if(timer.beat == 0) {
-                metronomeLine.state = ""        // cannot remember the purpose of this line, but it makes the state changes work
-                metronomeLine.state = "rotate"  // start the rotation
+                metronomeLine.state = "rotateRight"  // start the rotation
                 timer.beat = 1                  // prevents activating the clockwise rotation when the needle reaches the right side, the rotation will automatically bring it back
             }
             else {
+                metronomeLine.state = "rotateLeft"
                 timer.beat = 0                  // Needle is on the right now, change the value to 0 so that the rotation is activated when it hits the left side.
             }
         }
@@ -135,6 +135,8 @@ MainView {
 
 
         timer.num = (index + 1) % numOfBeats    // increment the index for the beat that I am on
+
+
     }
 
 
@@ -204,9 +206,9 @@ MainView {
 
         function pause() {
             stop();
+
             running = false;
             num = 0
-            beat = 0
         }
 
         function str2NumArray(str) {        // internal function; converts a string to an array of numbers
@@ -583,38 +585,44 @@ MainView {
                                    PropertyChanges {
                                        target: metronomeLine
                                    }
+                               },
+                               State {
+                                   name: "rotateRight"
+                                   PropertyChanges {
+                                       target: metronomeLine
+                                   }
+                               },
+                               State {
+                                   name: "rotateLeft"
+                                   PropertyChanges {
+                                       target: metronomeLine
+                                   }
                                }
+
                            ]
 
+
+                           SequentialAnimation {
+                               id: fullRotation
+                               RightRotation {id: rightRotation}
+                               LeftRotation {id: leftRotation}
+                           }
 
                            transitions: [
                                Transition {
                                    to: "rotate"
-                                   SequentialAnimation {
+                                   animations: fullRotation;
+                              },
+                               Transition {
+                                   to: "rotateRight"
+                                   animations: rightRotation;
+                              },
 
-                                       RotationAnimation {
-                                           id: rightRotation
-                                           target: metronomeLine
-                                           duration: timer.interval*(timer.subdivisions)
-                                           direction: RotationAnimation.Shortest
-                                           property: "rotation"
-                                           from: 300
-                                           to: 60
-                                       }
+                               Transition {
+                                   to: "rotateLeft"
+                                   animations: leftRotation;
+                               }
 
-
-                                       RotationAnimation {
-                                           id: leftRotation
-                                           target: metronomeLine
-                                           duration: timer.interval*(timer.subdivisions - 1)
-                                           direction: RotationAnimation.Shortest
-                                           property: "rotation"
-                                           from: 60
-                                           to: 300
-                                       }
-
-                                   }
-                              }
                            ]
 
                        }
