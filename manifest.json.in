@@ -9,7 +9,7 @@
             "desktop": "uMetronome/uMetronome.desktop"
         }
     },
-    "version": "2.8",
+    "version": "2.9",
     "maintainer": "Oliver Nichols <oliver.nic012@gmail.com>",
     "framework": "ubuntu-sdk-15.04"
 }
