@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-19 20:18-0400\n"
+"POT-Creation-Date: 2015-10-20 13:57-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,116 +17,93 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: /home/otter/uMetronome/uMetronome/Main-Copy.qml:28
-#: /home/otter/uMetronome/uMetronome/Main.qml:366
-msgid "uMetronome"
-msgstr ""
-
-#: /home/otter/uMetronome/uMetronome/Main-Copy.qml:34
-msgid "Hello world.."
-msgstr ""
-
-#: /home/otter/uMetronome/uMetronome/Main-Copy.qml:56
-msgid "Tap me!"
-msgstr ""
-
-#: /home/otter/uMetronome/uMetronome/Main-Copy.qml:59
-msgid "..from Cpp Backend"
-msgstr ""
-
-#: /home/otter/uMetronome/uMetronome/Main.qml:336
-#: /home/otter/uMetronome/uMetronome/SaveSettingsDialog.qml:13
-#: /home/otter/uMetronome/uMetronome/TempoDialog.qml:25
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:335
+#: /home/otter/Apps/uMetronome/uMetronome/SaveSettingsDialog.qml:13
+#: /home/otter/Apps/uMetronome/uMetronome/TempoDialog.qml:25
 msgid "Ok"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/Main.qml:733
-#: /home/otter/uMetronome/uMetronome/StartToolButton.qml:13
-msgid "Stop"
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:365
+msgid "uMetronome"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/Main.qml:749
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:754
 msgid "Tempo"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/Main.qml:761
-#: /home/otter/uMetronome/uMetronome/SettingsToolButton.qml:7
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:766
+#: /home/otter/Apps/uMetronome/uMetronome/SettingsToolButton.qml:7
 msgid "Settings"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/Main.qml:903
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:908
 msgid "Main beat"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/Main.qml:914
-#: /home/otter/uMetronome/uMetronome/Main.qml:1053
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:919
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:1058
 msgid "Volume"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/Main.qml:1041
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:1046
 msgid "Sub beat"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/Main.qml:1149
+#: /home/otter/Apps/uMetronome/uMetronome/Main.qml:1154
 msgid "Save Current Settings"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/MetronomeToolButton.qml:7
+#: /home/otter/Apps/uMetronome/uMetronome/MetronomeToolButton.qml:7
 msgid "Metronome"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/SaveSettingsDialog.qml:10
+#: /home/otter/Apps/uMetronome/uMetronome/SaveSettingsDialog.qml:10
 msgid "Confirmation"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/SaveSettingsDialog.qml:11
+#: /home/otter/Apps/uMetronome/uMetronome/SaveSettingsDialog.qml:11
 msgid "Your settings have been saved!"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/StartToolButton.qml:6
-#: /home/otter/uMetronome/uMetronome/StartToolButton.qml:18
-msgid "Start"
-msgstr ""
-
-#: /home/otter/uMetronome/uMetronome/TempoDialog.qml:9
+#: /home/otter/Apps/uMetronome/uMetronome/TempoDialog.qml:9
 msgid "Select a tempo"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:12
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:12
 msgid "Tempo Finder"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:18
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:18
 msgid ""
 "The tempo finder determines a tempo based on the tempo of two clicks. Please "
 "use the button below to click twice for a tempo."
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:26
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:34
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:26
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:34
 msgid "Press"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:47
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:47
 msgid "Press Again"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:56
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:56
 msgid "0"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:61
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:61
 msgid "bpm"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:71
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:71
 msgid "Close"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:77
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:77
 msgid "Use This Tempo"
 msgstr ""
 
-#: /home/otter/uMetronome/uMetronome/TempoFinder.qml:91
+#: /home/otter/Apps/uMetronome/uMetronome/TempoFinder.qml:91
 msgid "Please only submit a number that is between 30 and 240"
 msgstr ""
