@@ -269,7 +269,7 @@ MainView {
          Popover {
              id: soundPopover
              Column {
-                 height: pageLayout.height  // fill the height of the page
+                 //height: pageLayout.height  // fill the height of the page
                  width: 200
                  anchors {
                      top: parent.top
@@ -284,7 +284,7 @@ MainView {
                  }
 
                  ListView {
-                     height: pageLayout.height - sHeader.height - okButton.height
+                     height: childrenRect.height > pageLayout.height - sHeader.height - okButton.height ? pageLayout.height - sHeader.height - okButton.height : childrenRect.height;
                      width: parent.width
 
                      model: soundFiles              // populate the list with the sounds
@@ -655,6 +655,9 @@ MainView {
                                 source: Image {
                                     id: beatImage
                                     source: picPath + "eighth.svg"
+
+                                    width: units.gu(16);
+                                    height: units.gu(5);
 
                                     Component.onCompleted: {
                                         var items = DbFunctions.getDbItems();

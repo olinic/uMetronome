@@ -126,12 +126,12 @@ ListModel {
         type: "Uncommon Beats"
     }
     ListElement {
-        name: "4/4 Quarter"
-        number: 4
+        name: "2/4 Quarter"
+        number: 2
         tempoDiv: 1
         pattern: ""
         silentPattern: ""
-        img: "44quarter.svg"
+        img: "24quarter.svg"
         type: "Common Measures"
     }
     ListElement {
@@ -141,6 +141,15 @@ ListModel {
         pattern: ""
         silentPattern: ""
         img: "34quarter.svg"
+        type: "Common Measures"
+    }
+    ListElement {
+        name: "4/4 Quarter"
+        number: 4
+        tempoDiv: 1
+        pattern: ""
+        silentPattern: ""
+        img: "44quarter.svg"
         type: "Common Measures"
     }
     ListElement {
