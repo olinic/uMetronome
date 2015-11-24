@@ -82,6 +82,9 @@ Component {
                              id: image
                              source: picPath + img;
 
+                             width: units.gu(16);
+                             height: units.gu(5);
+
                              anchors.horizontalCenter: parent.horizontalCenter;
                          }
 
